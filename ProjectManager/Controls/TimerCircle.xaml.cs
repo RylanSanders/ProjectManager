@@ -32,6 +32,7 @@ namespace ProjectManager.Controls
                 DurationTextBox.Text = CurrentTime.ToString(@"dd\.hh\:mm\:ss\.ff");
             }
         }
+
         public TimerCircle()
         {
             InitializeComponent();

@@ -24,6 +24,18 @@ namespace ProjectManager
     {
         public ObservableCollection<TaskItemDO> TaskItems { get; set; }
 
+        private TaskItemDO _activeTask;
+        public TaskItemDO ActiveTask { get
+            {
+                return _activeTask;
+            }
+            set
+            {
+                _activeTask = value;
+                MainTimerCircle.Dispatcher.Invoke(() => MainTimerCircle.ActiveTaskTextBox.Text = _activeTask.Name);
+            }
+        }
+
         private System.Timers.Timer _timer;
         private List<IntervalDO> _timerIntervals = new List<IntervalDO>();
         public TimerPage()
@@ -36,10 +48,12 @@ namespace ProjectManager
             TaskItems.Add(new TaskItemDO() { Name = "Third", Description = "Plc", Type = "kh", Duration = TimeSpan.Zero });
 
             TasksListView.ItemsSource = TaskItems;
-
+            TasksListView.SelectionChanged += TasksListView_SelectionChanged;
             SetTimer();
             
         }
+
+        
 
         private void SetTimer()
         {
@@ -93,6 +107,15 @@ namespace ProjectManager
 
             //TODO: this is where we would cache the completed time results
             _timerIntervals.Clear();
+        }
+
+        private void TasksListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedTask = TasksListView.SelectedItem as TaskItemDO;
+            if (selectedTask != null)
+            {
+                ActiveTask = selectedTask;
+            }
         }
     }
 }

@@ -7,6 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="Aqua">
-        <TextBlock x:Name="DurationTextBox"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="DurationTextBox" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="ActiveTaskTextBox" Grid.Row="1" HorizontalAlignment="Center"/>
     </Grid>
 </UserControl>

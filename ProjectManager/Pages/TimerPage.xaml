@@ -9,8 +9,40 @@
       Title="TimerPage">
 
     <Grid Background="Aqua">
-        <TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
+        <!--<TextBlock>
             <Hyperlink NavigateUri="CalendarPage.xaml">Hello</Hyperlink>
-        </TextBlock>
+        </TextBlock>-->
+        <StackPanel x:Name="TimerPanel" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="DarkSlateBlue"/>
+        <StackPanel x:Name="TaskListPanel" Grid.Row="0" Grid.Column="1" Background="Azure">
+            <ListView x:Name="TasksListView" VerticalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Text="{Binding Description}" Grid.Column="1" Margin="20,0,0,0" />
+                            <TextBlock Text="{Binding Type}" Grid.Column="2" Margin="20,0,0,0"/>
+                            <TextBlock Text="{Binding Duration}" Grid.Column="3" Margin="20,0,0,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel x:Name="TaskControlsPanel" Grid.Row="1" Grid.Column="1" Background="Black"/>
+        <StackPanel x:Name="OverviewControlsPanel" Grid.Row="2" Grid.ColumnSpan="2" Background="LavenderBlush"/>
     </Grid>
 </Page>

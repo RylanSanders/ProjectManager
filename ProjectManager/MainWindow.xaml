@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Source="TimerPage.xaml">
+        Title="MainWindow" Height="450" Width="800" Source="Pages/TimerPage.xaml">
     
 </NavigationWindow>

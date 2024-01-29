@@ -24,8 +24,8 @@ namespace ProjectManager
     {
         public ObservableCollection<TaskItemDO> TaskItems { get; set; }
 
-        private TimeSpan _startTime;
         private System.Timers.Timer _timer;
+        private List<IntervalDO> _timerIntervals = new List<IntervalDO>();
         public TimerPage()
         {
             TaskItems = new ObservableCollection<TaskItemDO>();
@@ -36,7 +36,6 @@ namespace ProjectManager
             TaskItems.Add(new TaskItemDO() { Name = "Third", Description = "Plc", Type = "kh", Duration = TimeSpan.Zero });
 
             TasksListView.ItemsSource = TaskItems;
-            _startTime = DateTime.Now.TimeOfDay;
 
             SetTimer();
             
@@ -49,10 +48,13 @@ namespace ProjectManager
                 //Try Catch prevents an error on close because the task is canceled.
                 try
                 {
-                    MainTimerCircle.Dispatcher.Invoke(() => MainTimerCircle.CurrentTime = DateTime.Now.TimeOfDay - _startTime);
+                    _timerIntervals.Last().EndTime = DateTime.Now;
+                    TimeSpan sumIntervals = TimeSpan.Zero;
+                    _timerIntervals.ForEach(interval => sumIntervals += interval.EndTime.TimeOfDay - interval.StartTime.TimeOfDay);
+                    MainTimerCircle.Dispatcher.Invoke(() => MainTimerCircle.CurrentTime = sumIntervals);
                 } catch { }};
             _timer.AutoReset = true;
-            _timer.Enabled = true;
+            _timer.Enabled = false;
         }
 
         public class TaskItemDO
@@ -61,6 +63,36 @@ namespace ProjectManager
             public string? Description { get; set; }
             public string? Type { get; set; }
             public TimeSpan Duration { get; set; }
+        }
+
+        public class IntervalDO
+        {
+            public DateTime StartTime { get; set; }
+            public DateTime EndTime { get; set; }
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            _timerIntervals.Add(new IntervalDO() { StartTime = DateTime.Now });
+            _timer.Enabled = true;
+            _timer.Start();
+        }
+
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            _timerIntervals.Last().EndTime = DateTime.Now;
+            _timer.Stop();
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            _timerIntervals.Last().EndTime = DateTime.Now;
+            _timer.Stop();
+            _timer.Enabled = false;
+            MainTimerCircle.CurrentTime = TimeSpan.Zero;
+
+            //TODO: this is where we would cache the completed time results
+            _timerIntervals.Clear();
         }
     }
 }

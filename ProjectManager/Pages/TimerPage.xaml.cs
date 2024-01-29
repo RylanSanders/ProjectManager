@@ -45,7 +45,12 @@ namespace ProjectManager
         private void SetTimer()
         {
             _timer = new System.Timers.Timer(10);
-            _timer.Elapsed += (sender, args) => MainTimerCircle.Dispatcher.Invoke(() => MainTimerCircle.CurrentTime = DateTime.Now.TimeOfDay - _startTime);
+            _timer.Elapsed += (sender, args) => {
+                //Try Catch prevents an error on close because the task is canceled.
+                try
+                {
+                    MainTimerCircle.Dispatcher.Invoke(() => MainTimerCircle.CurrentTime = DateTime.Now.TimeOfDay - _startTime);
+                } catch { }};
             _timer.AutoReset = true;
             _timer.Enabled = true;
         }

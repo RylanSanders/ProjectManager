@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,9 +44,9 @@ namespace ProjectManager
             TaskItems = new ObservableCollection<TaskItemDO>();
             InitializeComponent();
 
-            TaskItems.Add(new TaskItemDO() { Name="First", Description="Hello", Type="adsf", Duration=TimeSpan.Zero});
-            TaskItems.Add(new TaskItemDO() { Name = "Second", Description = "World", Type = "bxvcb", Duration = TimeSpan.Zero });
-            TaskItems.Add(new TaskItemDO() { Name = "Third", Description = "Plc", Type = "kh", Duration = TimeSpan.Zero });
+            TaskItems.Add(new TaskItemDO(this) { Name="First", Description="Hello", Type="adsf"});
+            TaskItems.Add(new TaskItemDO(this) { Name = "Second", Description = "World", Type = "bxvcb" });
+            TaskItems.Add(new TaskItemDO(this) { Name = "Third", Description = "Plc", Type = "kh" });
 
             TasksListView.ItemsSource = TaskItems;
             TasksListView.SelectionChanged += TasksListView_SelectionChanged;
@@ -76,13 +77,62 @@ namespace ProjectManager
             public string? Name { get; set; }
             public string? Description { get; set; }
             public string? Type { get; set; }
-            public TimeSpan Duration { get; set; }
+            public TimeSpan Duration { get
+                {
+                    TimeSpan sumSessions = TimeSpan.Zero;
+                    _sessions.ForEach(session =>
+                    {
+                        TimeSpan sumIntervals = TimeSpan.Zero;
+                        session.Intervals.ForEach(interval => sumIntervals += interval.EndTime.TimeOfDay - interval.StartTime.TimeOfDay);
+                        sumSessions += sumIntervals;
+                    });
+                    return sumSessions;
+                }
+            }
+
+            private TimerPage mainPage;
+
+            //Private so that we can do things on add everytime
+            private List<SessionDO> _sessions { get; set; }
+
+            public List<SessionDO> Sessions { get { return _sessions; } }
+
+            public void AddSession(SessionDO session)
+            {
+                _sessions.Add(session);
+                var collectionView = CollectionViewSource.GetDefaultView(mainPage.TasksListView.ItemsSource);
+                collectionView.Refresh();
+            }
+
+            //The right way to do this would be for the session and interval to also be dependency models then make the change event bubble up to the listview
+            //But that is annoying
+            public void UpdateSessions()
+            {
+                var collectionView = CollectionViewSource.GetDefaultView(mainPage.TasksListView.ItemsSource);
+                collectionView.Refresh();
+            }
+
+            public TaskItemDO(TimerPage page) 
+            {
+                _sessions = new List<SessionDO>();
+                mainPage = page;
+            }
         }
 
         public class IntervalDO
         {
             public DateTime StartTime { get; set; }
             public DateTime EndTime { get; set; }
+        }
+
+        public class SessionDO
+        {
+            public List<IntervalDO> Intervals { get; set; }
+
+            public SessionDO()
+            {
+                Intervals = new List<IntervalDO>();
+            }
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -105,7 +155,9 @@ namespace ProjectManager
             _timer.Enabled = false;
             MainTimerCircle.CurrentTime = TimeSpan.Zero;
 
-            //TODO: this is where we would cache the completed time results
+            SessionDO completedSession = new SessionDO();
+            completedSession.Intervals.AddRange(_timerIntervals);
+            ActiveTask.AddSession(completedSession);
             _timerIntervals.Clear();
         }
 

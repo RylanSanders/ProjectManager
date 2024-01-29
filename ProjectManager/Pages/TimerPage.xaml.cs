@@ -23,6 +23,9 @@ namespace ProjectManager
     public partial class TimerPage : Page
     {
         public ObservableCollection<TaskItemDO> TaskItems { get; set; }
+
+        private TimeSpan _startTime;
+        private System.Timers.Timer _timer;
         public TimerPage()
         {
             TaskItems = new ObservableCollection<TaskItemDO>();
@@ -33,6 +36,18 @@ namespace ProjectManager
             TaskItems.Add(new TaskItemDO() { Name = "Third", Description = "Plc", Type = "kh", Duration = TimeSpan.Zero });
 
             TasksListView.ItemsSource = TaskItems;
+            _startTime = DateTime.Now.TimeOfDay;
+
+            SetTimer();
+            
+        }
+
+        private void SetTimer()
+        {
+            _timer = new System.Timers.Timer(10);
+            _timer.Elapsed += (sender, args) => MainTimerCircle.Dispatcher.Invoke(() => MainTimerCircle.CurrentTime = DateTime.Now.TimeOfDay - _startTime);
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
         }
 
         public class TaskItemDO

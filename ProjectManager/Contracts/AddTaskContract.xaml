@@ -1,0 +1,28 @@
+﻿<Window x:Class="ProjectManager.Contracts.AddTaskContract"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjectManager.Contracts"
+        mc:Ignorable="d"
+        Title="AddTaskContract" Height="400" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
+        <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="0"/>
+        <TextBlock Text="Description" Grid.Column="0" Grid.Row="1"/>
+        <TextBox x:Name="DescriptionTextBox" Grid.Column="1" Grid.Row="1"/>
+        <TextBlock Text="Type" Grid.Column="0" Grid.Row="2"/>
+        <TextBox x:Name="TypeTextBox" Grid.Column="1" Grid.Row="2"/>
+        <Button x:Name="DoneButton" Grid.Row="3" Grid.ColumnSpan="2" Content="Done" Click="DoneButton_Click"/>
+    </Grid>
+</Window>

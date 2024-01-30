@@ -25,8 +25,16 @@
         <Grid x:Name="TimerPanel" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="DarkSlateBlue">
             <Controls:TimerCircle x:Name="MainTimerCircle" />
         </Grid>
-        <StackPanel x:Name="TaskListPanel" Grid.Row="0" Grid.Column="1" Background="Azure">
-            <ListView x:Name="TasksListView" VerticalAlignment="Stretch">
+        <Grid x:Name="TaskListPanel" Grid.Row="0" Grid.Column="1" Background="Azure" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -44,8 +52,13 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackPanel>
-        <StackPanel x:Name="TaskControlsPanel" Grid.Row="1" Grid.Column="1" Background="Black"/>
+            <Button x:Name="AddTaskButton" Grid.Row="1" Click="AddTaskButton_Click">
+                <materialDesign:PackIcon Width="24" Height="24" Kind="Add" />
+            </Button>
+            <Button x:Name="DeleteTaskButton" Grid.Row="1" Grid.Column="1" Click="DeleteTaskButton_Click">
+                <materialDesign:PackIcon Width="24" Height="24" Kind="Close" />
+            </Button>
+        </Grid>
         <Grid x:Name="OverviewControlsPanel" Grid.Row="2" Grid.ColumnSpan="2" Background="LavenderBlush">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

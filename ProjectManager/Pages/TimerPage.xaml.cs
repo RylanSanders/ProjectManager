@@ -156,5 +156,20 @@ namespace ProjectManager
                 ActiveTask = selectedTask;
             }
         }
+
+        private void AddTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddTaskContract addTaskContract = new AddTaskContract();
+            addTaskContract.ShowDialog();
+            if (addTaskContract.DialogResult == true)
+            {
+                TaskItems.Add(new TaskItemEntity(this) { Name = addTaskContract.ToAddTaskItem.Name, Description = addTaskContract.ToAddTaskItem.Description, Type = addTaskContract.ToAddTaskItem.Type });
+            }
+        }
+
+        private void DeleteTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            TaskItems.Remove(ActiveTask);
+        }
     }
 }

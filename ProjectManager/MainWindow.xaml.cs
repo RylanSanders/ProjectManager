@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ProjectManager.Utils;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,12 @@ namespace ProjectManager
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnClosed(EventArgs args)
+        {
+            base.OnClosed(args);
+            TaskUtil.Save();
         }
     }
 }

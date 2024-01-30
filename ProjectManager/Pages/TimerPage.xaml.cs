@@ -1,5 +1,6 @@
 ﻿using ProjectManager.Contracts;
 using ProjectManager.DataObjects;
+using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,14 +47,14 @@ namespace ProjectManager
             TaskItems = new ObservableCollection<TaskItemEntity>();
             InitializeComponent();
 
-            TaskItems.Add(new TaskItemEntity(this) { Name="First", Description="Hello", Type="adsf"});
-            TaskItems.Add(new TaskItemEntity(this) { Name = "Second", Description = "World", Type = "bxvcb" });
-            TaskItems.Add(new TaskItemEntity(this) { Name = "Third", Description = "Plc", Type = "kh" });
+
 
             TasksListView.ItemsSource = TaskItems;
             TasksListView.SelectionChanged += TasksListView_SelectionChanged;
             SetTimer();
-            
+
+            TaskUtil.Load();
+            TaskUtil.GetInstance().TaskItems.ForEach(item => TaskItems.Add(new TaskItemEntity(this, item)));
         }
 
         
@@ -77,13 +78,14 @@ namespace ProjectManager
         //TODO change this to TaskItemEntity - DOs will be for persistance and simple data - Entitites for UI operations
         public class TaskItemEntity
         {
-            public string? Name { get; set; }
-            public string? Description { get; set; }
-            public string? Type { get; set; }
+            public TaskItemDO TaskItem { get; set; }
+            public string? Name { get { return TaskItem.Name; } set { TaskItem.Name = value; } }
+            public string? Description { get { return TaskItem.Description; } set { TaskItem.Description = value; } }
+            public string? Type { get { return TaskItem.Type; } set { TaskItem.Type = value; } }
             public TimeSpan Duration { get
                 {
                     TimeSpan sumSessions = TimeSpan.Zero;
-                    _sessions.ForEach(session =>
+                    TaskItem.Sessions.ForEach(session =>
                     {
                         TimeSpan sumIntervals = TimeSpan.Zero;
                         session.Intervals.ForEach(interval => sumIntervals += interval.EndTime.TimeOfDay - interval.StartTime.TimeOfDay);
@@ -95,29 +97,22 @@ namespace ProjectManager
 
             private TimerPage mainPage;
 
-            //Private so that we can do things on add everytime
-            private List<SessionDO> _sessions { get; set; }
-
-            public List<SessionDO> Sessions { get { return _sessions; } }
-
             public void AddSession(SessionDO session)
             {
-                _sessions.Add(session);
+                TaskItem.Sessions.Add(session);
                 var collectionView = CollectionViewSource.GetDefaultView(mainPage.TasksListView.ItemsSource);
                 collectionView.Refresh();
             }
 
-            //The right way to do this would be for the session and interval to also be dependency models then make the change event bubble up to the listview
-            //But that is annoying
             public void UpdateSessions()
             {
                 var collectionView = CollectionViewSource.GetDefaultView(mainPage.TasksListView.ItemsSource);
                 collectionView.Refresh();
             }
 
-            public TaskItemEntity(TimerPage page) 
+            public TaskItemEntity(TimerPage page, TaskItemDO dataObject) 
             {
-                _sessions = new List<SessionDO>();
+                TaskItem = dataObject;
                 mainPage = page;
             }
         }
@@ -166,13 +161,16 @@ namespace ProjectManager
             addTaskContract.ShowDialog();
             if (addTaskContract.DialogResult == true)
             {
-                TaskItems.Add(new TaskItemEntity(this) { Name = addTaskContract.ToAddTaskItem.Name, Description = addTaskContract.ToAddTaskItem.Description, Type = addTaskContract.ToAddTaskItem.Type });
+                TaskUtil.GetInstance().TaskItems.Add(addTaskContract.ToAddTaskItem);
+                TaskItems.Add(new TaskItemEntity(this, addTaskContract.ToAddTaskItem));
             }
         }
 
         private void DeleteTaskButton_Click(object sender, RoutedEventArgs e)
         {
+            TaskUtil.GetInstance().TaskItems.RemoveAll(task => task.ID == ActiveTask.TaskItem.ID);
             TaskItems.Remove(ActiveTask);
         }
+
     }
 }

@@ -131,8 +131,11 @@ namespace ProjectManager
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            _timerIntervals.Last().EndTime = DateTime.Now;
-            _timer.Stop();
+            if (_timerIntervals.Count !=0)
+            {
+                _timerIntervals.Last().EndTime = DateTime.Now;
+                _timer.Stop();
+            }
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)

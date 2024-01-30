@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProjectManager.Contracts;
+using ProjectManager.DataObjects;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -23,10 +25,10 @@ namespace ProjectManager
     /// </summary>
     public partial class TimerPage : Page
     {
-        public ObservableCollection<TaskItemDO> TaskItems { get; set; }
+        public ObservableCollection<TaskItemEntity> TaskItems { get; set; }
 
-        private TaskItemDO _activeTask;
-        public TaskItemDO ActiveTask { get
+        private TaskItemEntity _activeTask;
+        public TaskItemEntity ActiveTask { get
             {
                 return _activeTask;
             }
@@ -41,12 +43,12 @@ namespace ProjectManager
         private List<IntervalDO> _timerIntervals = new List<IntervalDO>();
         public TimerPage()
         {
-            TaskItems = new ObservableCollection<TaskItemDO>();
+            TaskItems = new ObservableCollection<TaskItemEntity>();
             InitializeComponent();
 
-            TaskItems.Add(new TaskItemDO(this) { Name="First", Description="Hello", Type="adsf"});
-            TaskItems.Add(new TaskItemDO(this) { Name = "Second", Description = "World", Type = "bxvcb" });
-            TaskItems.Add(new TaskItemDO(this) { Name = "Third", Description = "Plc", Type = "kh" });
+            TaskItems.Add(new TaskItemEntity(this) { Name="First", Description="Hello", Type="adsf"});
+            TaskItems.Add(new TaskItemEntity(this) { Name = "Second", Description = "World", Type = "bxvcb" });
+            TaskItems.Add(new TaskItemEntity(this) { Name = "Third", Description = "Plc", Type = "kh" });
 
             TasksListView.ItemsSource = TaskItems;
             TasksListView.SelectionChanged += TasksListView_SelectionChanged;
@@ -72,7 +74,8 @@ namespace ProjectManager
             _timer.Enabled = false;
         }
 
-        public class TaskItemDO
+        //TODO change this to TaskItemEntity - DOs will be for persistance and simple data - Entitites for UI operations
+        public class TaskItemEntity
         {
             public string? Name { get; set; }
             public string? Description { get; set; }
@@ -112,26 +115,10 @@ namespace ProjectManager
                 collectionView.Refresh();
             }
 
-            public TaskItemDO(TimerPage page) 
+            public TaskItemEntity(TimerPage page) 
             {
                 _sessions = new List<SessionDO>();
                 mainPage = page;
-            }
-        }
-
-        public class IntervalDO
-        {
-            public DateTime StartTime { get; set; }
-            public DateTime EndTime { get; set; }
-        }
-
-        public class SessionDO
-        {
-            public List<IntervalDO> Intervals { get; set; }
-
-            public SessionDO()
-            {
-                Intervals = new List<IntervalDO>();
             }
         }
 
@@ -163,7 +150,7 @@ namespace ProjectManager
 
         private void TasksListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedTask = TasksListView.SelectedItem as TaskItemDO;
+            var selectedTask = TasksListView.SelectedItem as TaskItemEntity;
             if (selectedTask != null)
             {
                 ActiveTask = selectedTask;

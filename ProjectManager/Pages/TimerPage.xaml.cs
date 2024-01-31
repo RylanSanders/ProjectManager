@@ -136,7 +136,9 @@ namespace ProjectManager
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            _timerIntervals.Last().EndTime = DateTime.Now;
+            //Only change the end time if it wasn't set by the pause button
+            if(_timerIntervals.Last().EndTime==DateTime.MinValue)
+                _timerIntervals.Last().EndTime = DateTime.Now;
             _timer.Stop();
             _timer.Enabled = false;
             MainTimerCircle.CurrentTime = TimeSpan.Zero;

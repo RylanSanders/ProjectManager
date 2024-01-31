@@ -84,6 +84,7 @@ namespace ProjectManager
             public string? Type { get { return TaskItem.Type; } set { TaskItem.Type = value; } }
             public TimeSpan Duration { get
                 {
+                    //TODO for some reason this is wrong
                     TimeSpan sumSessions = TimeSpan.Zero;
                     TaskItem.Sessions.ForEach(session =>
                     {
@@ -149,6 +150,9 @@ namespace ProjectManager
         private void TasksListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedTask = TasksListView.SelectedItem as TaskItemEntity;
+            PlayButton.IsEnabled = true;
+            PauseButton.IsEnabled = true;
+            StopButton.IsEnabled = true;
             if (selectedTask != null)
             {
                 ActiveTask = selectedTask;
@@ -171,6 +175,7 @@ namespace ProjectManager
             TaskUtil.GetInstance().TaskItems.RemoveAll(task => task.ID == ActiveTask.TaskItem.ID);
             TaskItems.Remove(ActiveTask);
         }
+
 
     }
 }

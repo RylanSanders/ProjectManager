@@ -65,13 +65,13 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="PlayButton" Click="PlayButton_Click">
+            <Button x:Name="PlayButton" Click="PlayButton_Click" IsEnabled="False">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="Play" />
             </Button>
-            <Button x:Name="PauseButton" Grid.Column="1" Click="PauseButton_Click">
+            <Button x:Name="PauseButton" Grid.Column="1" Click="PauseButton_Click" IsEnabled="False">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="Pause" />
             </Button>
-            <Button x:Name="StopButton" Grid.Column="2" Click="StopButton_Click">
+            <Button x:Name="StopButton" Grid.Column="2" Click="StopButton_Click" IsEnabled="False">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="StopCircle" />
             </Button>
         </Grid>

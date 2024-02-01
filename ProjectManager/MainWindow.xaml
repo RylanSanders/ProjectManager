@@ -25,14 +25,23 @@
                 <StackPanel Width="150">
                     <Button Height="32" Content="Calendar" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/CalendarPage.xaml" />
                     <Button Height="32" Content="Timer" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/TimerPage.xaml" />
+                    <Button Height="32" Content="Kanban" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/KanbanPage.xaml" />
+                    <Button Height="32" Content="ToDo" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/ToDoPage.xaml" />
                 </StackPanel>
             </md:DrawerHost.LeftDrawerContent>
-
+            <md:DrawerHost.RightDrawerContent>
+                <StackPanel Width="150" Background="Aqua">
+                </StackPanel>
+            </md:DrawerHost.RightDrawerContent>
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
                 <!-- Binding the Is*DrawerOpen, you can also bind this to a boolean in your view model -->
+                <ToggleButton IsChecked="{Binding IsRightDrawerOpen, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type md:DrawerHost}}}" Background="LightSlateGray"
+                        ToolTip="Open Notifications">
+                    <md:PackIcon Kind="Bell" Height="40" Width="40" />
+                </ToggleButton>
                 <ToggleButton IsChecked="{Binding IsLeftDrawerOpen, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type md:DrawerHost}}}" Background="LightSlateGray"
-                          Style="{StaticResource MaterialDesignActionLightToggleButton}" ToolTip="Open Left Drawer">
-                    <md:PackIcon Kind="Menu" Height="32" Width="Auto" />
+                           ToolTip="Open Left Drawer">
+                    <md:PackIcon Kind="Menu" Height="40" Width="40" />
                 </ToggleButton>
             </StackPanel>
 

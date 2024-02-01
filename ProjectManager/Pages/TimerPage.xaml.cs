@@ -53,8 +53,8 @@ namespace ProjectManager
             TasksListView.SelectionChanged += TasksListView_SelectionChanged;
             SetTimer();
 
-            TaskUtil.Load();
-            TaskUtil.GetInstance().TaskItems.ForEach(item => TaskItems.Add(new TaskItemEntity(this, item)));
+            DataUtil.Load();
+            DataUtil.GetInstance().TaskItems.ForEach(item => TaskItems.Add(new TaskItemEntity(this, item)));
         }
 
         
@@ -167,14 +167,14 @@ namespace ProjectManager
             addTaskContract.ShowDialog();
             if (addTaskContract.DialogResult == true)
             {
-                TaskUtil.GetInstance().TaskItems.Add(addTaskContract.ToAddTaskItem);
+                DataUtil.GetInstance().TaskItems.Add(addTaskContract.ToAddTaskItem);
                 TaskItems.Add(new TaskItemEntity(this, addTaskContract.ToAddTaskItem));
             }
         }
 
         private void DeleteTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            TaskUtil.GetInstance().TaskItems.RemoveAll(task => task.ID == ActiveTask.TaskItem.ID);
+            DataUtil.GetInstance().TaskItems.RemoveAll(task => task.ID == ActiveTask.TaskItem.ID);
             TaskItems.Remove(ActiveTask);
         }
 

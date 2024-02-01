@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectManager.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,13 @@ namespace ProjectManager
         {
             string a = e.Parameter as string;
             ContentFrame.Source = new Uri(a, UriKind.Relative);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            DataUtil.Save();
         }
     }
 }

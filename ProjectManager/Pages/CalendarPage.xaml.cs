@@ -54,8 +54,9 @@ namespace ProjectManager
             if (addDateContract.DialogResult == true)
             {
                 var newDateDO = addDateContract.ToAddDateDO;
-                newDateDO.Interval.StartTime = MainCalendar.SelectedDate.Value + newDateDO.Interval.StartTime.TimeOfDay;
-                newDateDO.Interval.EndTime = MainCalendar.SelectedDate.Value + newDateDO.Interval.EndTime.TimeOfDay;
+                DateTime date = MainCalendar.SelectedDate ?? DateTime.Today;
+                newDateDO.Interval.StartTime = date + newDateDO.Interval.StartTime.TimeOfDay;
+                newDateDO.Interval.EndTime = date + newDateDO.Interval.EndTime.TimeOfDay;
                 DataUtil.GetInstance().Dates.Add(newDateDO);
                 CurrentDateDOs.Add(new DateEntity(newDateDO));
             }

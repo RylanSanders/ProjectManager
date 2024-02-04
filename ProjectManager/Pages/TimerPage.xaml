@@ -8,7 +8,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TimerPage">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid Background="Aqua">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -25,7 +31,7 @@
         <Grid x:Name="TimerPanel" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="DarkSlateBlue">
             <Controls:TimerCircle x:Name="MainTimerCircle" />
         </Grid>
-        <Grid x:Name="TaskListPanel" Grid.Row="0" Grid.Column="1" Background="Azure" Grid.RowSpan="2">
+        <Grid x:Name="TaskListPanel" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Background="{DynamicResource MaterialDesignDarkBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="35"/>
@@ -34,7 +40,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2" >
+            <ListView x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource MaterialDesignDarkBackground}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -46,32 +52,32 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding Name}" />
                             <TextBlock Text="{Binding Description}" Grid.Column="1" Margin="20,0,0,0" />
-                            <TextBlock Text="{Binding Type}" Grid.Column="2" Margin="20,0,0,0"/>
+                            <TextBlock Text="{Binding Type}" Grid.Column="2" Margin="20,0,0,0" />
                             <TextBlock Text="{Binding Duration}" Grid.Column="3" Margin="20,0,0,0"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="AddTaskButton" Grid.Row="1" Click="AddTaskButton_Click">
+            <Button x:Name="AddTaskButton" Grid.Row="1" Click="AddTaskButton_Click" Style="{StaticResource GreenPurpleHoverButton}" Height="40">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="Add" />
             </Button>
-            <Button x:Name="DeleteTaskButton" Grid.Row="1" Grid.Column="1" Click="DeleteTaskButton_Click">
+            <Button x:Name="DeleteTaskButton" Grid.Row="1" Grid.Column="1" Click="DeleteTaskButton_Click" Style="{StaticResource RedPurpleHoverButton}" Height="40">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="Close" />
             </Button>
         </Grid>
-        <Grid x:Name="OverviewControlsPanel" Grid.Row="2" Grid.ColumnSpan="2" Background="LavenderBlush">
+        <Grid x:Name="OverviewControlsPanel" Grid.Row="2" Grid.ColumnSpan="2" Background="SaddleBrown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="PlayButton" Click="PlayButton_Click" IsEnabled="False">
+            <Button x:Name="PlayButton" Click="PlayButton_Click" IsEnabled="False" Height="75" Style="{StaticResource GreenPurpleHoverButton}">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="Play" />
             </Button>
-            <Button x:Name="PauseButton" Grid.Column="1" Click="PauseButton_Click" IsEnabled="False">
+            <Button x:Name="PauseButton" Grid.Column="1" Click="PauseButton_Click"  IsEnabled="False" Height="75" Style="{StaticResource YellowPurpleHoverButton}">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="Pause" />
             </Button>
-            <Button x:Name="StopButton" Grid.Column="2" Click="StopButton_Click" IsEnabled="False">
+            <Button x:Name="StopButton" Grid.Column="2" Click="StopButton_Click" IsEnabled="False" Height="75" Style="{StaticResource RedPurpleHoverButton}">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="StopCircle" />
             </Button>
         </Grid>

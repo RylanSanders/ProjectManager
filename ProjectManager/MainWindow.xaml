@@ -35,11 +35,12 @@
             </md:DrawerHost.RightDrawerContent>
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
                 <!-- Binding the Is*DrawerOpen, you can also bind this to a boolean in your view model -->
-                <ToggleButton IsChecked="{Binding IsRightDrawerOpen, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type md:DrawerHost}}}" Background="LightSlateGray"
+                <ToggleButton IsChecked="{Binding IsRightDrawerOpen, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type md:DrawerHost}}}" Style="{StaticResource MaterialDesignActionDarkToggleButton}" Width="40" Height="40"
                         ToolTip="Open Notifications">
                     <md:PackIcon Kind="Bell" Height="40" Width="40" />
+                    
                 </ToggleButton>
-                <ToggleButton IsChecked="{Binding IsLeftDrawerOpen, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type md:DrawerHost}}}" Background="LightSlateGray"
+                <ToggleButton IsChecked="{Binding IsLeftDrawerOpen, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type md:DrawerHost}}}"  Style="{StaticResource MaterialDesignActionDarkToggleButton}" Width="40" Height="40"
                            ToolTip="Open Left Drawer">
                     <md:PackIcon Kind="Menu" Height="40" Width="40" />
                 </ToggleButton>

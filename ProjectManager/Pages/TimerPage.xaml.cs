@@ -147,6 +147,7 @@ namespace ProjectManager
             completedSession.Intervals.AddRange(_timerIntervals);
             ActiveTask.AddSession(completedSession);
             _timerIntervals.Clear();
+
         }
 
         private void TasksListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

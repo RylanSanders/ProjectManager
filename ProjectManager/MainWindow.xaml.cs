@@ -32,6 +32,8 @@ namespace ProjectManager
             Pages.Add("Pages/ToDoPage.xaml", new ToDoPage()) ;
 
             ContentFrame.Content = Pages["Pages/TimerPage.xaml"];
+
+            WindowUtil.ApplyDarkWindowStyle(this);
         }
 
         public static RoutedCommand SwitchPageCommand = new RoutedCommand();

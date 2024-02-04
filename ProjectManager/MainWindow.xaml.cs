@@ -1,4 +1,5 @@
-﻿using ProjectManager.Utils;
+﻿using ProjectManager.Pages;
+using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,17 @@ namespace ProjectManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Dictionary<string, Page> Pages = new Dictionary<string, Page>();
         public MainWindow()
         {
             InitializeComponent();
 
+            Pages.Add("Pages/CalendarPage.xaml", new CalendarPage());
+            Pages.Add("Pages/TimerPage.xaml", new TimerPage());
+            Pages.Add("Pages/KanbanPage.xaml", new KanbanPage());
+            Pages.Add("Pages/ToDoPage.xaml", new ToDoPage()) ;
 
+            ContentFrame.Content = Pages["Pages/TimerPage.xaml"];
         }
 
         public static RoutedCommand SwitchPageCommand = new RoutedCommand();
@@ -32,8 +39,8 @@ namespace ProjectManager
 
         protected void SwitchPageExecuted(object target, ExecutedRoutedEventArgs e)
         {
-            string a = e.Parameter as string;
-            ContentFrame.Source = new Uri(a, UriKind.Relative);
+            string pageID = e.Parameter as string;
+            ContentFrame.Content = Pages[pageID];
         }
 
         protected override void OnClosed(EventArgs e)

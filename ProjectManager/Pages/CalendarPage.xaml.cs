@@ -59,6 +59,7 @@ namespace ProjectManager
                 newDateDO.Interval.EndTime = date + newDateDO.Interval.EndTime.TimeOfDay;
                 DataUtil.GetInstance().Dates.Add(newDateDO);
                 CurrentDateDOs.Add(new DateEntity(newDateDO));
+                MainCalendar.InvalidateVisual();
             }
         }
 

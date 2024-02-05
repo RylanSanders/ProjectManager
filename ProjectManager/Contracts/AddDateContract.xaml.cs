@@ -1,4 +1,5 @@
 ﻿using ProjectManager.DataObjects;
+using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,13 @@ namespace ProjectManager.Contracts
         public AddDateContract()
         {
             InitializeComponent();
+
+            WindowUtil.ApplyDarkWindowStyle(this);
         }
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)
         {
-            ToAddDateDO = new DateDO() { Name = NameTextBox.Text, Description = DescriptionTextBox.Text, Interval = new IntervalDO() {StartTime= DateTime.Parse(IntervalStartTextBox.Text), EndTime= DateTime.Parse(IntervalStartTextBox.Text) } };
+            ToAddDateDO = new DateDO() { Name = NameTextBox.Text, Description = DescriptionTextBox.Text, Interval = new IntervalDO() {StartTime= IntervalStartTimerPicker.SelectedTime.Value, EndTime= IntervalEndTimePicker.SelectedTime.Value } };
             this.DialogResult = true;
         }
     }

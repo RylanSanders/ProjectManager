@@ -32,6 +32,7 @@ namespace ProjectManager
 
             DateListView.ItemsSource = CurrentDateDOs;
 
+            MainCalendar.SelectedDate = DateTime.Today;
             DataUtil.Load();
             DataUtil.GetInstance().Dates.Where(d => d.Interval.StartTime.Date == MainCalendar.SelectedDate).ToList().ForEach(dateDO => CurrentDateDOs.Add(new DateEntity(dateDO)));
         }

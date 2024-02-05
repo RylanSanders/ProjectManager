@@ -1,4 +1,5 @@
 ﻿using ProjectManager.DataObjects;
+using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace ProjectManager.Contracts
         public AddTaskContract()
         {
             InitializeComponent();
+            WindowUtil.ApplyDarkWindowStyle(this);
         }
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)

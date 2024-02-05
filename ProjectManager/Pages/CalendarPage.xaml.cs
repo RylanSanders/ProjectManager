@@ -33,7 +33,7 @@ namespace ProjectManager
             DateListView.ItemsSource = CurrentDateDOs;
 
             DataUtil.Load();
-            DataUtil.GetInstance().Dates.ForEach(dateDO => CurrentDateDOs.Add(new DateEntity(dateDO)));
+            DataUtil.GetInstance().Dates.Where(d => d.Interval.StartTime.Date == MainCalendar.SelectedDate).ToList().ForEach(dateDO => CurrentDateDOs.Add(new DateEntity(dateDO)));
         }
 
         public class DateEntity
@@ -60,6 +60,12 @@ namespace ProjectManager
                 DataUtil.GetInstance().Dates.Add(newDateDO);
                 CurrentDateDOs.Add(new DateEntity(newDateDO));
             }
+        }
+
+        private void MainCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CurrentDateDOs.Clear();
+            DataUtil.GetInstance().Dates.Where(d=>d.Interval.StartTime.Date == MainCalendar.SelectedDate).ToList().ForEach(dateDO => CurrentDateDOs.Add(new DateEntity(dateDO)));
         }
     }
 }

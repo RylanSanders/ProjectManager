@@ -9,15 +9,14 @@
       Title="CalendarPage">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Viewbox Stretch="Fill" StretchDirection="Both">
-            <Calendar x:Name="MainCalendar" />
-        </Viewbox>
-        <GridSplitter Grid.Column="1" Width="10" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="SlateGray" Foreground="{DynamicResource MaterialDesignDarkForeground}" Focusable="False"/>
-        <Grid Grid.Column="2">
+        <Calendar x:Name="MainCalendar" Grid.Column="1" SelectedDatesChanged="MainCalendar_SelectedDatesChanged" />
+        <GridSplitter Grid.Column="2" Width="10" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="SlateGray" Foreground="{DynamicResource MaterialDesignDarkForeground}" Focusable="False"/>
+        <Grid Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="35"/>

@@ -5,7 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectManager.Contracts"
         mc:Ignorable="d"
-        Title="AddTaskContract" Height="400" Width="300">
+        Title="AddTaskContract" Height="200" Width="300">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -17,12 +24,12 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
-        <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="0"/>
-        <TextBlock Text="Description" Grid.Column="0" Grid.Row="1"/>
-        <TextBox x:Name="DescriptionTextBox" Grid.Column="1" Grid.Row="1"/>
-        <TextBlock Text="Type" Grid.Column="0" Grid.Row="2"/>
-        <TextBox x:Name="TypeTextBox" Grid.Column="1" Grid.Row="2"/>
-        <Button x:Name="DoneButton" Grid.Row="3" Grid.ColumnSpan="2" Content="Done" Click="DoneButton_Click"/>
+        <TextBlock Text="Name" Grid.Column="0" Grid.Row="0" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
+        <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="0" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+        <TextBlock Text="Description" Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
+        <TextBox x:Name="DescriptionTextBox" Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+        <TextBlock Text="Type" Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
+        <TextBox x:Name="TypeTextBox" Grid.Column="1" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+        <Button x:Name="DoneButton" Grid.Row="3" Grid.ColumnSpan="2" Content="Done" Click="DoneButton_Click" Style="{StaticResource GreenPurpleHoverButton}" Height="40" Margin="0,5,0,0"/>
     </Grid>
 </Window>

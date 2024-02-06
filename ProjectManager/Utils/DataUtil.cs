@@ -30,6 +30,9 @@ namespace ProjectManager.Utils
         private DataDO DataDO { get; set; }
         public List<TaskItemDO> TaskItems { get { return DataDO.Tasks; } }
         public List<DateDO> Dates { get { return DataDO.Dates; } }
+        public List<ProjectDefinitionDO> ProjectDefinitions { get{return DataDO.ProjectDefinitions;} }
+        public List<KanbanCardDO> KanbanCards {get{return DataDO.KanbanCards;}} 
+        public List<TagDefinitionDO> TagDefinitions {get{return DataDO.TagDefinitions;} }
 
         public DataUtil() 
         {

@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="ProjectManager.Controls.KanbanCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectManager.Controls"
+             xmlns:converters="clr-namespace:ProjectManager.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="225" d:DesignWidth="200">
+    <UserControl.Resources>
+        <converters:ProjectNameConverter x:Key="ProjectNameConverter"/>
+    </UserControl.Resources>
+    <Grid  Height="100" Width="200">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Opacity="0.5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
+    </Grid>
+</UserControl>

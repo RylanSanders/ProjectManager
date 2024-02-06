@@ -22,6 +22,7 @@
         <Frame x:Name="ContentFrame" Source="Pages/TimerPage.xaml" NavigationUIVisibility="Hidden"></Frame>
         <md:DrawerHost LeftDrawerBackground="{DynamicResource MaterialDesignPaper}">
             <md:DrawerHost.LeftDrawerContent>
+                <!-- TODO switch this to a Material Design Navigation Rail-->
                 <StackPanel Width="150">
                     <Button Height="32" Content="Calendar" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/CalendarPage.xaml" />
                     <Button Height="32" Content="Timer" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/TimerPage.xaml" />

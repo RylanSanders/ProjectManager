@@ -5,6 +5,7 @@ using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,12 +30,15 @@ namespace ProjectManager.Pages
         public ObservableCollection<KanbanCardDO> Column2Cards { get; set; }
         public ObservableCollection<KanbanCardDO> Column3Cards { get; set; }
         public ObservableCollection<KanbanCardDO> Column4Cards { get; set; }
+
+        public ObservableCollection<KanbanCardDO>[] ColumnCollections;
         public KanbanPage()
         {
             Column1Cards = new ObservableCollection<KanbanCardDO>();
             Column2Cards = new ObservableCollection<KanbanCardDO>();
             Column3Cards = new ObservableCollection<KanbanCardDO>();
             Column4Cards = new ObservableCollection<KanbanCardDO>();
+            ColumnCollections = [Column1Cards, Column2Cards, Column3Cards, Column4Cards];
             InitializeComponent();
 
             Column1ListView.ItemsSource = Column1Cards;
@@ -67,6 +71,26 @@ namespace ProjectManager.Pages
                 DataUtil.GetInstance().KanbanCards.Add(addCardContract.NewKanbanCard);
                 Column1Cards.Add(addCardContract.NewKanbanCard);
             }
+        }
+
+        private void ColumnListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListViewItem)
+            {
+                ListViewItem draggedItem = sender as ListViewItem;
+                DragDrop.DoDragDrop(draggedItem, draggedItem.DataContext, DragDropEffects.Move);
+                draggedItem.IsSelected = true;
+            }
+        }
+
+        private void ColumnListView_Drop(object sender, DragEventArgs e)
+        {
+            var data = e.Data.GetData(typeof(KanbanCardDO)) as KanbanCardDO;
+            var newIndex = int.Parse(((FrameworkElement)sender).Tag.ToString());
+            ColumnCollections[data.ColumnNumber].Remove(data);
+            data.ColumnNumber = newIndex;
+            ColumnCollections[data.ColumnNumber].Add(data);
+
         }
     }
 }

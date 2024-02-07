@@ -10,12 +10,14 @@
     <UserControl.Resources>
         <converters:ProjectNameConverter x:Key="ProjectNameConverter"/>
     </UserControl.Resources>
-    <Grid  Height="100" Width="200">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Opacity="0.5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
-    </Grid>
+    <Border BorderThickness="3" BorderBrush="Gray">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Opacity="0.5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
+        </Grid>
+    </Border>
 </UserControl>

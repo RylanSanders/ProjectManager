@@ -15,6 +15,14 @@
             <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDarkForeground}"/>
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
+        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource MaterialDesignCardsListBox}">
+            <Setter Property="BorderBrush" Value="DarkGray"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="AllowDrop" Value="True"/>
+        </Style>
+        <Style TargetType="{x:Type ListViewItem}">
+            
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -46,8 +54,17 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            
             <TextBlock Text="New"/>
-            <ListView x:Name="Column1ListView" Grid.Row="1">
+            <ListView x:Name="Column1ListView" Grid.Row="1" Drop="ColumnListView_Drop" Tag="0">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="0" />
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColumnListViewItem_PreviewMouseLeftButtonDown"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <controls:KanbanCard DataModel="{Binding}"/>
@@ -55,7 +72,15 @@
                 </ListView.ItemTemplate>
             </ListView>
             <TextBlock Text="Active" Grid.Column="1"/>
-            <ListView x:Name="Column2ListView" Grid.Row="1" Grid.Column="1">
+            <ListView x:Name="Column2ListView" Grid.Row="1" Grid.Column="1" Drop="ColumnListView_Drop" Tag="1">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="0" />
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColumnListViewItem_PreviewMouseLeftButtonDown"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <controls:KanbanCard DataModel="{Binding}"/>
@@ -63,15 +88,31 @@
                 </ListView.ItemTemplate>
             </ListView>
             <TextBlock Text="Testing" Grid.Column="2"/>
-            <ListView x:Name="Column3ListView" Grid.Row="1" Grid.Column="2">
+            <ListView x:Name="Column3ListView" Grid.Row="1" Grid.Column="2" Drop="ColumnListView_Drop" Tag="2">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="0" />
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColumnListViewItem_PreviewMouseLeftButtonDown"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <controls:KanbanCard DataModel="{Binding}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <TextBlock Text="Completed" Grid.Column="3"/>
-            <ListView x:Name="Column4ListView" Grid.Row="1" Grid.Column="3">
+            <TextBlock Text="Completed" Grid.Column="3" />
+            <ListView x:Name="Column4ListView" Grid.Row="1" Grid.Column="3" Drop="ColumnListView_Drop" Tag="3">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="Padding" Value="0" />
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ColumnListViewItem_PreviewMouseLeftButtonDown"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <controls:KanbanCard DataModel="{Binding}"/>

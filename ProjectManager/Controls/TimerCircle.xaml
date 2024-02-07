@@ -4,14 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectManager.Controls"
+             xmlns:uwp="using:Microsoft.Toolkit.Uwp.UI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Aqua">
+    <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="DurationTextBox" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="ActiveTaskTextBox" Grid.Row="1" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="DurationTextBox" HorizontalAlignment="Center" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+        <Ellipse Fill="Aqua" Height="100" Width="100"></Ellipse>
+        <TextBlock x:Name="ActiveTaskTextBox" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
     </Grid>
 </UserControl>

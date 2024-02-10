@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using ProjectManager.Contracts;
+using ProjectManager.Controls;
 using ProjectManager.DataObjects;
 using ProjectManager.Utils;
 using System;
@@ -75,11 +76,12 @@ namespace ProjectManager.Pages
 
         private void ColumnListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is ListViewItem)
+            if (sender is KanbanCard)
             {
-                ListViewItem draggedItem = sender as ListViewItem;
-                DragDrop.DoDragDrop(draggedItem, draggedItem.DataContext, DragDropEffects.Move);
-                draggedItem.IsSelected = true;
+                KanbanCard draggedItem = sender as KanbanCard;
+                var listViewItem = ((Border)((ContentPresenter)draggedItem.TemplatedParent).Parent).TemplatedParent as ListViewItem;
+                DragDrop.DoDragDrop(draggedItem, listViewItem.DataContext, DragDropEffects.Move);
+                listViewItem.IsSelected = true;
             }
         }
 
@@ -91,6 +93,20 @@ namespace ProjectManager.Pages
             data.ColumnNumber = newIndex;
             ColumnCollections[data.ColumnNumber].Add(data);
 
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var senderButton = sender as Button;
+            if (senderButton != null)
+            {
+                var card = senderButton.DataContext as KanbanCardDO;
+                if (card != null)
+                {
+                    ColumnCollections[card.ColumnNumber].Remove(card);
+                    DataUtil.GetInstance().KanbanCards.Remove(card);
+                }
+            }
         }
     }
 }

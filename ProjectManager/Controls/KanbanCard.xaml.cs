@@ -1,4 +1,5 @@
 ﻿using ProjectManager.DataObjects;
+using ProjectManager.Pages;
 using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,12 @@ namespace ProjectManager.Controls
     /// </summary>
     public partial class KanbanCard : UserControl
     {
-
         public KanbanCard()
         {
             // A temporary dummy initialization to prevent nulls
             DataModel = new KanbanCardDO();
-            
             InitializeComponent();
+
         }
 
         public KanbanCardDO DataModel
@@ -39,6 +39,7 @@ namespace ProjectManager.Controls
 
         public static readonly DependencyProperty DataModelProperty =
         DependencyProperty.Register("DataModel", typeof(KanbanCardDO), typeof(KanbanCard));
+
 
     }
 }

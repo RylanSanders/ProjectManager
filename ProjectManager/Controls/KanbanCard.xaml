@@ -5,19 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectManager.Controls"
              xmlns:converters="clr-namespace:ProjectManager.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="225" d:DesignWidth="200">
     <UserControl.Resources>
-        <converters:ProjectNameConverter x:Key="ProjectNameConverter"/>
+        <ResourceDictionary>
+            <converters:ProjectNameConverter x:Key="ProjectNameConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Border BorderThickness="3" BorderBrush="Gray">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Opacity="0.5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
+        <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Opacity="0.5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
+            </Grid>
         </Grid>
+        
     </Border>
 </UserControl>

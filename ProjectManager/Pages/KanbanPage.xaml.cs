@@ -69,6 +69,7 @@ namespace ProjectManager.Pages
             if (addProjectContract.DialogResult == true)
             {
                 DataUtil.GetInstance().ProjectDefinitions.Add(addProjectContract.NewProjectDefinition);
+                ProjectDefinitions.Add(addProjectContract.NewProjectDefinition);
             }
         }
 

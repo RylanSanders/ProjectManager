@@ -25,18 +25,36 @@ namespace ProjectManager.Contracts
     {
         public TaskItemDO ToAddTaskItem;
         public ObservableCollection<ProjectDefinitionDO> ProjectDefinitions { get; set; }
+        public ObservableCollection<KanbanCardDO> KanbanCards { get; set; }
+        private KanbanCardDO BlankCard;
         public AddTaskContract()
         {
             InitializeComponent();
             WindowUtil.ApplyDarkWindowStyle(this);
+
             ProjectDefinitions = new ObservableCollection<ProjectDefinitionDO>(DataUtil.GetInstance().ProjectDefinitions);
             ParentProjectComboBox.ItemsSource = ProjectDefinitions;
             ParentProjectComboBox.SelectedIndex = 0;
+
+            KanbanCards = new ObservableCollection<KanbanCardDO>(DataUtil.GetInstance().KanbanCards);
+            BlankCard = new KanbanCardDO();
+            KanbanCards.Insert(0,BlankCard);
+            AssociatedCardComoBox.ItemsSource = KanbanCards;
+            AssociatedCardComoBox.SelectedIndex = 0;
         }
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)
         {
-            ToAddTaskItem = new TaskItemDO() {Name=NameTextBox.Text, Description=DescriptionTextBox.Text, ParentProjectID=((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID };
+            var associatedCard = AssociatedCardComoBox.SelectedValue as KanbanCardDO;
+            if (associatedCard == BlankCard)
+            {
+                ToAddTaskItem = new TaskItemDO() { Name = NameTextBox.Text, Description = DescriptionTextBox.Text, ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID };
+            }
+            else
+            {
+                ToAddTaskItem = new TaskItemDO() { Name = NameTextBox.Text, Description = DescriptionTextBox.Text, ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, AssociatedKanbanCardID=associatedCard.ID };
+            }
+            
             this.DialogResult = true;
         }
     }

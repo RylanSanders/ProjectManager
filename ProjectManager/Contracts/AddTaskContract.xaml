@@ -20,6 +20,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -29,9 +30,11 @@
         <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="0" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
         <TextBlock Text="Description" Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
         <TextBox x:Name="DescriptionTextBox" Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
-        <TextBlock Text="ParentProjectTextBlock" Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
+        <TextBlock Text="Parent Project" Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
         <ComboBox x:Name="ParentProjectComboBox" Grid.Column="1" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" DisplayMemberPath="Name" />
 
-        <Button x:Name="DoneButton" Grid.Row="3" Grid.ColumnSpan="2" Content="Done" Click="DoneButton_Click" Style="{StaticResource GreenPurpleHoverButton}" Height="40" Margin="0,5,0,0"/>
+        <TextBlock Text="Associated Card" Grid.Column="0" Grid.Row="3" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
+        <ComboBox x:Name="AssociatedCardComoBox" Grid.Column="1" Grid.Row="3" Foreground="{DynamicResource MaterialDesignDarkForeground}" DisplayMemberPath="Name" />
+        <Button x:Name="DoneButton" Grid.Row="4" Grid.ColumnSpan="2" Content="Done" Click="DoneButton_Click" Style="{StaticResource GreenPurpleHoverButton}" Height="40" Margin="0,5,0,0"/>
     </Grid>
 </Window>

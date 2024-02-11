@@ -35,6 +35,7 @@ namespace ProjectManager.Pages
         public ObservableCollection<KanbanCardDO>[] ColumnCollections;
         public ObservableCollection<ProjectDefinitionDO> ProjectDefinitions { get; set; }
         private ProjectDefinitionDO BlankProject;
+        private TimeSpan LastLeftMouseDown = DateTime.Now.TimeOfDay;
         public KanbanPage()
         {
             Column1Cards = new ObservableCollection<KanbanCardDO>();
@@ -86,6 +87,7 @@ namespace ProjectManager.Pages
         {
             if (sender is KanbanCard)
             {
+                LastLeftMouseDown = DateTime.Now.TimeOfDay;
                 KanbanCard draggedItem = sender as KanbanCard;
                 var listViewItem = ((Border)((ContentPresenter)draggedItem.TemplatedParent).Parent).TemplatedParent as ListViewItem;
                 DragDrop.DoDragDrop(draggedItem, listViewItem.DataContext, DragDropEffects.Move);
@@ -95,12 +97,14 @@ namespace ProjectManager.Pages
 
         private void ColumnListView_Drop(object sender, DragEventArgs e)
         {
-            var data = e.Data.GetData(typeof(KanbanCardDO)) as KanbanCardDO;
-            var newIndex = int.Parse(((FrameworkElement)sender).Tag.ToString());
-            ColumnCollections[data.ColumnNumber].Remove(data);
-            data.ColumnNumber = newIndex;
-            ColumnCollections[data.ColumnNumber].Add(data);
-
+            if (DateTime.Now.TimeOfDay-LastLeftMouseDown > TimeSpan.FromMilliseconds(250))
+            {
+                var data = e.Data.GetData(typeof(KanbanCardDO)) as KanbanCardDO;
+                var newIndex = int.Parse(((FrameworkElement)sender).Tag.ToString());
+                ColumnCollections[data.ColumnNumber].Remove(data);
+                data.ColumnNumber = newIndex;
+                ColumnCollections[data.ColumnNumber].Add(data);
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)

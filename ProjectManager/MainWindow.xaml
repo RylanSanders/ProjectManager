@@ -11,6 +11,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -24,10 +25,10 @@
             <md:DrawerHost.LeftDrawerContent>
                 <!-- TODO switch this to a Material Design Navigation Rail-->
                 <StackPanel Width="150">
-                    <Button Height="32" Content="Calendar" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/CalendarPage.xaml" />
-                    <Button Height="32" Content="Timer" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/TimerPage.xaml" />
-                    <Button Height="32" Content="Kanban" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/KanbanPage.xaml" />
-                    <Button Height="32" Content="ToDo" Command="{x:Static local:MainWindow.SwitchPageCommand}" CommandParameter="Pages/ToDoPage.xaml" />
+                    <Button Height="32" Content="Calendar" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/CalendarPage.xaml" />
+                    <Button Height="32" Content="Timer" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/TimerPage.xaml" />
+                    <Button Height="32" Content="Kanban" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/KanbanPage.xaml" />
+                    <Button Height="32" Content="ToDo" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/ToDoPage.xaml" />
                 </StackPanel>
             </md:DrawerHost.LeftDrawerContent>
             <md:DrawerHost.RightDrawerContent>

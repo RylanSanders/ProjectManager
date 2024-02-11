@@ -11,7 +11,7 @@ namespace ProjectManager.DataObjects
         public Guid ID { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? Type { get; set; }
+        public Guid ParentProjectID { get; set; }
         public List<SessionDO> Sessions { get; set; }
 
         public TaskItemDO() { ID = Guid.NewGuid(); Sessions = new List<SessionDO>(); }

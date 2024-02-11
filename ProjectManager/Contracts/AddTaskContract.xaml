@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectManager.Contracts"
+        xmlns:converter="clr-namespace:ProjectManager.Converters"
         mc:Ignorable="d"
         Title="AddTaskContract" Height="200" Width="300">
     <Window.Resources>
@@ -28,8 +29,9 @@
         <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="0" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
         <TextBlock Text="Description" Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
         <TextBox x:Name="DescriptionTextBox" Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
-        <TextBlock Text="Type" Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
-        <TextBox x:Name="TypeTextBox" Grid.Column="1" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+        <TextBlock Text="ParentProjectTextBlock" Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
+        <ComboBox x:Name="ParentProjectComboBox" Grid.Column="1" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" DisplayMemberPath="Name" />
+
         <Button x:Name="DoneButton" Grid.Row="3" Grid.ColumnSpan="2" Content="Done" Click="DoneButton_Click" Style="{StaticResource GreenPurpleHoverButton}" Height="40" Margin="0,5,0,0"/>
     </Grid>
 </Window>

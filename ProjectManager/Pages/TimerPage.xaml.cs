@@ -75,13 +75,12 @@ namespace ProjectManager
             _timer.Enabled = false;
         }
 
-        //TODO change this to TaskItemEntity - DOs will be for persistance and simple data - Entitites for UI operations
         public class TaskItemEntity
         {
             public TaskItemDO TaskItem { get; set; }
             public string? Name { get { return TaskItem.Name; } set { TaskItem.Name = value; } }
             public string? Description { get { return TaskItem.Description; } set { TaskItem.Description = value; } }
-            public string? Type { get { return TaskItem.Type; } set { TaskItem.Type = value; } }
+            public Guid ParentProjectID { get { return TaskItem.ParentProjectID; } set { TaskItem.ParentProjectID = value; } }
             public TimeSpan Duration { get
                 {
                     //TODO for some reason this is wrong

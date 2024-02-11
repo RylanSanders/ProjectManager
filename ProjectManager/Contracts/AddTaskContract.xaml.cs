@@ -2,6 +2,7 @@
 using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,15 +24,19 @@ namespace ProjectManager.Contracts
     public partial class AddTaskContract : Window
     {
         public TaskItemDO ToAddTaskItem;
+        public ObservableCollection<ProjectDefinitionDO> ProjectDefinitions { get; set; }
         public AddTaskContract()
         {
             InitializeComponent();
             WindowUtil.ApplyDarkWindowStyle(this);
+            ProjectDefinitions = new ObservableCollection<ProjectDefinitionDO>(DataUtil.GetInstance().ProjectDefinitions);
+            ParentProjectComboBox.ItemsSource = ProjectDefinitions;
+            ParentProjectComboBox.SelectedIndex = 0;
         }
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)
         {
-            ToAddTaskItem = new TaskItemDO() {Name=NameTextBox.Text, Description=DescriptionTextBox.Text, Type=TypeTextBox.Text };
+            ToAddTaskItem = new TaskItemDO() {Name=NameTextBox.Text, Description=DescriptionTextBox.Text, ParentProjectID=((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID };
             this.DialogResult = true;
         }
     }

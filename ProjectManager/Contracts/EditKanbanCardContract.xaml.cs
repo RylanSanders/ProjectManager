@@ -1,4 +1,5 @@
 ﻿using ProjectManager.DataObjects;
+using ProjectManager.Entities;
 using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,13 @@ namespace ProjectManager.Contracts
     public partial class EditKanbanCardContract : Window
     {
         public ObservableCollection<ProjectDefinitionDO> Projects { get; set; }
+        public ObservableCollection<TaskItemEntity> TaskItems { get; set; }
         public KanbanCardDO EditedKanbanCard { get; set; }
         private KanbanCardDO ExistingKanbanCard;
         public EditKanbanCardContract(KanbanCardDO kanbanCard)
         {
             ExistingKanbanCard = kanbanCard;
+            TaskItems = new ObservableCollection<TaskItemEntity>();
             Projects = new ObservableCollection<ProjectDefinitionDO>();
             DataUtil.GetInstance().ProjectDefinitions.ForEach(d => Projects.Add(d));
             InitializeComponent();
@@ -38,6 +41,12 @@ namespace ProjectManager.Contracts
             var currentProject = Projects.Where(p=>p.ID== kanbanCard.ParentProjectID).FirstOrDefault();
             ProjectComboBox.SelectedIndex = currentProject!=null?Projects.IndexOf(currentProject):0;
             DescriptionTextbox.AppendText(kanbanCard.Description);
+
+            TasksListView.ItemsSource = TaskItems;
+            DataUtil.GetInstance().TaskItems
+                .Where(t=>t.AssociatedKanbanCardID==kanbanCard.ID)
+                .ToList()
+                .ForEach(item => TaskItems.Add(new TaskItemEntity(TasksListView, item)));
         }
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)

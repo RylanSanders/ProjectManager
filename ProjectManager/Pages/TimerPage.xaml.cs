@@ -1,5 +1,6 @@
 ﻿using ProjectManager.Contracts;
 using ProjectManager.DataObjects;
+using ProjectManager.Entities;
 using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace ProjectManager
             SetTimer();
 
             DataUtil.Load();
-            DataUtil.GetInstance().TaskItems.ForEach(item => TaskItems.Add(new TaskItemEntity(this, item)));
+            DataUtil.GetInstance().TaskItems.ForEach(item => TaskItems.Add(new TaskItemEntity(TasksListView, item)));
         }
 
         
@@ -73,48 +74,6 @@ namespace ProjectManager
                 } catch { }};
             _timer.AutoReset = true;
             _timer.Enabled = false;
-        }
-
-        public class TaskItemEntity
-        {
-            public TaskItemDO TaskItem { get; set; }
-            public string? Name { get { return TaskItem.Name; } set { TaskItem.Name = value; } }
-            public string? Description { get { return TaskItem.Description; } set { TaskItem.Description = value; } }
-            public Guid ParentProjectID { get { return TaskItem.ParentProjectID; } set { TaskItem.ParentProjectID = value; } }
-            public TimeSpan Duration { get
-                {
-                    //TODO for some reason this is wrong
-                    TimeSpan sumSessions = TimeSpan.Zero;
-                    TaskItem.Sessions.ForEach(session =>
-                    {
-                        TimeSpan sumIntervals = TimeSpan.Zero;
-                        session.Intervals.ForEach(interval => sumIntervals += interval.EndTime.TimeOfDay - interval.StartTime.TimeOfDay);
-                        sumSessions += sumIntervals;
-                    });
-                    return sumSessions;
-                }
-            }
-
-            private TimerPage mainPage;
-
-            public void AddSession(SessionDO session)
-            {
-                TaskItem.Sessions.Add(session);
-                var collectionView = CollectionViewSource.GetDefaultView(mainPage.TasksListView.ItemsSource);
-                collectionView.Refresh();
-            }
-
-            public void UpdateSessions()
-            {
-                var collectionView = CollectionViewSource.GetDefaultView(mainPage.TasksListView.ItemsSource);
-                collectionView.Refresh();
-            }
-
-            public TaskItemEntity(TimerPage page, TaskItemDO dataObject) 
-            {
-                TaskItem = dataObject;
-                mainPage = page;
-            }
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -168,7 +127,7 @@ namespace ProjectManager
             if (addTaskContract.DialogResult == true)
             {
                 DataUtil.GetInstance().TaskItems.Add(addTaskContract.ToAddTaskItem);
-                TaskItems.Add(new TaskItemEntity(this, addTaskContract.ToAddTaskItem));
+                TaskItems.Add(new TaskItemEntity(TasksListView, addTaskContract.ToAddTaskItem));
             }
         }
 

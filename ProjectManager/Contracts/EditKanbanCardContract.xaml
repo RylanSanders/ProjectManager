@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectManager.Contracts"
+        xmlns:converters="clr-namespace:ProjectManager.Converters"
         mc:Ignorable="d"
         Title="KanbanCardEditContract" Height="400" Width="500">
     <Window.Resources>
@@ -14,6 +15,7 @@
             <Style TargetType="{x:Type Grid}">
                 <Setter Property="Background" Value="{DynamicResource MaterialDesignDarkBackground}"/>
             </Style>
+            <converters:ProjectNameConverter x:Key="ProjectNameConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -31,7 +33,29 @@
             <ComboBox x:Name="ProjectComboBox" Grid.Row="1" DisplayMemberPath="Name" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
         </Grid>
         <Grid x:Name="BodyGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
             <RichTextBox x:Name="DescriptionTextbox" BorderBrush="DarkGray" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+            <ListView x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Column="1" Background="{DynamicResource MaterialDesignDarkBackground}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Text="{Binding Description}" Grid.Column="1" Margin="20,0,0,0" />
+                            <TextBlock Text="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Grid.Column="2" Margin="20,0,0,0" />
+                            <TextBlock Text="{Binding Duration}" Grid.Column="3" Margin="20,0,0,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
         <Button x:Name="DoneButton" Content="Done" Height="60" Grid.Row="2" Style="{StaticResource GreenPurpleHoverButton}" Click="DoneButton_Click"/>
     </Grid>

@@ -1,0 +1,38 @@
+﻿<Window x:Class="ProjectManager.Contracts.EditKanbanCardContract"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjectManager.Contracts"
+        mc:Ignorable="d"
+        Title="KanbanCardEditContract" Height="400" Width="500">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Grid}">
+                <Setter Property="Background" Value="{DynamicResource MaterialDesignDarkBackground}"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="HeaderGrid" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="NameTextBox" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+            <ComboBox x:Name="ProjectComboBox" Grid.Row="1" DisplayMemberPath="Name" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+        </Grid>
+        <Grid x:Name="BodyGrid" Grid.Row="1">
+            <RichTextBox x:Name="DescriptionTextbox" BorderBrush="DarkGray" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+        </Grid>
+        <Button x:Name="DoneButton" Content="Done" Height="60" Grid.Row="2" Style="{StaticResource GreenPurpleHoverButton}" Click="DoneButton_Click"/>
+    </Grid>
+</Window>

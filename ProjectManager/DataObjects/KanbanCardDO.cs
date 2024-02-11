@@ -21,5 +21,15 @@ namespace ProjectManager.DataObjects
         public string Description { get; set; }
         public List<Guid> TagIDs { get; set; }
         public int ColumnNumber { get; set; }
+
+        public void Merge(KanbanCardDO other)
+        {
+            ID = other.ID;
+            ParentProjectID = other.ParentProjectID;
+            Name = other.Name;
+            Description = other.Description;
+            ColumnNumber = other.ColumnNumber;
+            TagIDs = other.TagIDs.ToArray().ToList();
+        }
     } 
 }

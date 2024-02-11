@@ -1,4 +1,5 @@
-﻿using ProjectManager.DataObjects;
+﻿using ProjectManager.Contracts;
+using ProjectManager.DataObjects;
 using ProjectManager.Pages;
 using ProjectManager.Utils;
 using System;
@@ -25,10 +26,21 @@ namespace ProjectManager.Controls
     {
         public KanbanCard()
         {
-            // A temporary dummy initialization to prevent nulls
-            DataModel = new KanbanCardDO();
             InitializeComponent();
 
+            MouseDoubleClick += KanbanCard_MouseDoubleClick;
+        }
+
+        private void KanbanCard_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           EditKanbanCardContract editKanbanCardContract = new EditKanbanCardContract(DataModel);
+            editKanbanCardContract.ShowDialog();
+            if (editKanbanCardContract.DialogResult == true)
+            {
+                DataModel.Merge(editKanbanCardContract.EditedKanbanCard);
+                InvalidateProperty(DataModelProperty);
+                InvalidateVisual();
+            }
         }
 
         public KanbanCardDO DataModel

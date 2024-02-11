@@ -33,6 +33,8 @@ namespace ProjectManager.Pages
         public ObservableCollection<KanbanCardDO> Column4Cards { get; set; }
 
         public ObservableCollection<KanbanCardDO>[] ColumnCollections;
+        public ObservableCollection<ProjectDefinitionDO> ProjectDefinitions { get; set; }
+        private ProjectDefinitionDO BlankProject;
         public KanbanPage()
         {
             Column1Cards = new ObservableCollection<KanbanCardDO>();
@@ -51,6 +53,12 @@ namespace ProjectManager.Pages
             DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 1).ToList().ForEach(c => Column2Cards.Add(c));
             DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 2).ToList().ForEach(c => Column3Cards.Add(c));
             DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 3).ToList().ForEach(c => Column4Cards.Add(c));
+
+            ProjectDefinitions = new ObservableCollection<ProjectDefinitionDO>(DataUtil.GetInstance().ProjectDefinitions);
+            BlankProject = new ProjectDefinitionDO();
+            ProjectDefinitions.Insert(0,BlankProject);
+            ProjectFilterComboBox.ItemsSource = ProjectDefinitions;
+            ProjectFilterComboBox.SelectedIndex = 0;
         }
 
         private void AddProjectButton_Click(object sender, RoutedEventArgs e)
@@ -107,6 +115,35 @@ namespace ProjectManager.Pages
                     DataUtil.GetInstance().KanbanCards.Remove(card);
                 }
             }
+        }
+
+        private void ProjectFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var allCards = DataUtil.GetInstance().KanbanCards;
+            Guid parentProjectID = ((ProjectDefinitionDO)ProjectFilterComboBox.SelectedValue).ID;
+            if (parentProjectID == BlankProject.ID) { AddAllCards();return; }
+            Column1Cards.Clear();
+            Column2Cards.Clear();
+            Column3Cards.Clear();
+            Column4Cards.Clear();
+
+            allCards.Where(card => card.ColumnNumber == 0 && card.ParentProjectID == parentProjectID).ToList().ForEach(c=>Column1Cards.Add(c));
+            allCards.Where(card => card.ColumnNumber == 1 && card.ParentProjectID == parentProjectID).ToList().ForEach(c => Column2Cards.Add(c));
+            allCards.Where(card => card.ColumnNumber == 2 && card.ParentProjectID == parentProjectID).ToList().ForEach(c => Column3Cards.Add(c));
+            allCards.Where(card => card.ColumnNumber == 3 && card.ParentProjectID == parentProjectID).ToList().ForEach(c => Column4Cards.Add(c));
+        }
+
+        private void AddAllCards()
+        {
+            Column1Cards.Clear();
+            Column2Cards.Clear();
+            Column3Cards.Clear();
+            Column4Cards.Clear();
+
+            DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 0).ToList().ForEach(c => Column1Cards.Add(c));
+            DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 1).ToList().ForEach(c => Column2Cards.Add(c));
+            DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 2).ToList().ForEach(c => Column3Cards.Add(c));
+            DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 3).ToList().ForEach(c => Column4Cards.Add(c));
         }
     }
 }

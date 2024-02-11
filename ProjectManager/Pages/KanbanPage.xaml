@@ -61,7 +61,18 @@
             <ColumnDefinition Width="50"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="FilterRowGrid" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="ProjectFilterComboBox" Grid.Column="1" HorizontalAlignment="Left" Foreground="{DynamicResource MaterialDesignDarkForeground}" Width="150" SelectionChanged="ProjectFilterComboBox_SelectionChanged" DisplayMemberPath="Name" />
+        </Grid>
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="300"/>
                 <RowDefinition Height="40"/>
@@ -75,7 +86,7 @@
                 <materialDesign:PackIcon Width="24" Height="24" Kind="PlusBox"/>
             </Button>
         </Grid>
-        <Grid x:Name="CardColumnsGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
+        <Grid x:Name="CardColumnsGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

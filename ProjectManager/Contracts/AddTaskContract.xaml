@@ -31,7 +31,7 @@
         <TextBlock Text="Description" Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
         <TextBox x:Name="DescriptionTextBox" Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
         <TextBlock Text="Parent Project" Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
-        <ComboBox x:Name="ParentProjectComboBox" Grid.Column="1" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" DisplayMemberPath="Name" />
+        <ComboBox x:Name="ParentProjectComboBox" Grid.Column="1" Grid.Row="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" DisplayMemberPath="Name" SelectionChanged="ParentProjectComboBox_SelectionChanged" />
 
         <TextBlock Text="Associated Card" Grid.Column="0" Grid.Row="3" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Center"/>
         <ComboBox x:Name="AssociatedCardComoBox" Grid.Column="1" Grid.Row="3" Foreground="{DynamicResource MaterialDesignDarkForeground}" DisplayMemberPath="Name" />

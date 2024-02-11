@@ -57,5 +57,16 @@ namespace ProjectManager.Contracts
             
             this.DialogResult = true;
         }
+
+        private void ParentProjectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (KanbanCards != null)
+            {
+                var selectedParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedItem).ID;
+                KanbanCards.Clear();
+                DataUtil.GetInstance().KanbanCards.Where(c => c.ParentProjectID == selectedParentProjectID).ToList().ForEach(c => KanbanCards.Add(c));
+                KanbanCards.Insert(0, BlankCard);
+            }
+        }
     }
 }

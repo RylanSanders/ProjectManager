@@ -29,7 +29,7 @@ namespace ProjectManager
             Pages.Add("Pages/CalendarPage.xaml", new CalendarPage());
             Pages.Add("Pages/TimerPage.xaml", new TimerPage());
             Pages.Add("Pages/KanbanPage.xaml", new KanbanPage());
-            Pages.Add("Pages/ToDoPage.xaml", new ToDoPage()) ;
+            Pages.Add("Pages/NotesPage.xaml", new NotesPage()) ;
 
             ContentFrame.Content = Pages["Pages/TimerPage.xaml"];
 

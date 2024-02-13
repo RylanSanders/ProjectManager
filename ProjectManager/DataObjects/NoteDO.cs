@@ -10,7 +10,14 @@ namespace ProjectManager.DataObjects
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public NoteType Type { get; set; }
+        public List<NoteDO> ChildrenNotes { get; set; }
         public Guid ID { get; set; }
-        public NoteDO() { ID = Guid.NewGuid(); }
+        public NoteDO() { ID = Guid.NewGuid();ChildrenNotes = new List<NoteDO>(); }
+
+        public enum NoteType
+        {
+            Folder, Note
+        }
     }
 }

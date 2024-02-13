@@ -10,16 +10,20 @@ namespace ProjectManager.Entities
 {
     public class NoteEntity
     {
-        private NoteDO Data;
+        public NoteDO DataObject { get; set; }
         public ObservableCollection<NoteEntity> ChildrenNotes { get; set; }
 
-        public string Name { get { return Data.Name.Substring(Data.Name.LastIndexOf("/")+1); } set { Data.Description = value; } }
+        public string Name { get { return DataObject.Name; } set { DataObject.Name = value; } }
 
-        public string Description { get { return Data.Description; } set { Data.Description = value; } }
+        public string Description { get { return DataObject.Description; } set { DataObject.Description = value; } }
         public NoteEntity(NoteDO note) 
         {
-            Data = note;
+            DataObject = note;
             ChildrenNotes = new ObservableCollection<NoteEntity>();
+            foreach (NoteDO child in note.ChildrenNotes)
+            {
+                ChildrenNotes.Add(new NoteEntity(child));
+            }
         }
     }
 }

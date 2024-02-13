@@ -34,7 +34,7 @@
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
-            <Button x:Name="AddNoteButton" Style="{StaticResource GreenPurpleHoverButton}" Content="Add Note" Grid.Row="1" />
+            <Button x:Name="AddNoteButton" Style="{StaticResource GreenPurpleHoverButton}" Content="Add Note" Grid.Row="1" Click="AddNoteButton_Click" />
         </Grid>
         <TabControl Grid.Column="2" x:Name="NoteTabPanel">
             <TabControl.ItemTemplate>

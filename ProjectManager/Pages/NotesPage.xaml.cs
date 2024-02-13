@@ -1,10 +1,13 @@
-﻿using ProjectManager.DataObjects;
+﻿using ProjectManager.Contracts;
+using ProjectManager.DataObjects;
 using ProjectManager.Entities;
+using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.DirectoryServices;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,61 +45,9 @@ namespace ProjectManager.Pages
 
         private void BuildTree()
         {
-            //TODO get this from the DataUtil instead of building here
-            NoteDO note = new NoteDO() {Name="Test1", Description="dfbfdhgjn" };
-            NoteDO note2 = new NoteDO() { Name = "TestDir/Test2", Description = "kljxcv" };
-            NoteDO note3 = new NoteDO() { Name = "TestDir/Woot/Test2", Description = "n,mfg" };
-            List<NoteDO> NoteDOs = new List<NoteDO>();
-            NoteDOs.Add(note);
-            NoteDOs.Add(note2);
-            NoteDOs.Add(note3);
-            foreach (NoteDO n in NoteDOs)
+            foreach (NoteDO n in DataUtil.GetInstance().Notes)
             {
-                //Split the Name for the dir
-               string[] dirs = n.Name.Split('/');
-                NoteEntity parent = null;
-                for (int i = 0; i < dirs.Count() - 1; i++)
-                {
-                    //Create all of the dirs
-                    var name = dirs[i];
-                    NoteEntity existingDir = null;
-                    if (parent == null)
-                    {
-                        existingDir = Notes.Where(no => no.Name == name).FirstOrDefault();
-                    }
-                    else
-                    {
-                        existingDir = parent.ChildrenNotes.Where(no => no.Name == name).FirstOrDefault();
-                    }
-
-                    if (existingDir != null)
-                    {
-                        parent = existingDir;
-                    }
-                    else
-                    {
-                        if (parent == null)
-                        {
-                            parent = new NoteEntity(new NoteDO() { Name = name });
-                            Notes.Add(parent);
-                        }
-                        else
-                        {
-                            NoteEntity newNote = new NoteEntity(new NoteDO() { Name = name });
-                            parent.ChildrenNotes.Add(newNote);
-                            parent = newNote;
-                        }
-                    }
-                }
-                string realFileName = dirs[dirs.Count() - 1];
-                if (parent != null)
-                {
-                    parent.ChildrenNotes.Add(new NoteEntity(n));
-                }
-                else
-                {
-                    Notes.Add(new NoteEntity(n));
-                }
+                Notes.Add(new NoteEntity(n));
             }
         }
 
@@ -107,6 +58,27 @@ namespace ProjectManager.Pages
             newTab.Name = newNote.Name; 
             OpenNotes.Add(newNote);
 
+        }
+
+        private void AddNoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedValue = (NoteEntity)NoteSelectionTreeView.SelectedValue;
+            string parentFolder = selectedValue != null ? selectedValue.Name : string.Empty;
+            AddNoteContract addNoteContract = new AddNoteContract();
+            addNoteContract.ShowDialog();
+            if (addNoteContract.DialogResult == true)
+            {
+                if (selectedValue == null)
+                {
+                    Notes.Add(new NoteEntity(addNoteContract.NewNoteDO));
+                    DataUtil.GetInstance().Notes.Add(addNoteContract.NewNoteDO);
+                }
+                else
+                {
+                    selectedValue.ChildrenNotes.Add(new NoteEntity(addNoteContract.NewNoteDO));
+                    selectedValue.DataObject.ChildrenNotes.Add(addNoteContract.NewNoteDO);
+                }
+            }
         }
     }
 }

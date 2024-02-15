@@ -14,6 +14,7 @@ namespace ProjectManager.Entities
         public ObservableCollection<NoteEntity> ChildrenNotes { get; set; }
 
         public string Name { get { return DataObject.Name; } set { DataObject.Name = value; } }
+        public NoteDO.NoteType Type {get{return DataObject.Type;}}
 
         public string Description { get { return DataObject.Description; } set { DataObject.Description = value; } }
         public NoteEntity(NoteDO note) 

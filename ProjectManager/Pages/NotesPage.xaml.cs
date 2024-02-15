@@ -55,9 +55,9 @@ namespace ProjectManager.Pages
 
         private void NoteSelectionTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (e.NewValue != null)
+            NoteEntity newNote = (NoteEntity)e.NewValue;
+            if (e.NewValue != null && newNote.Type==NoteDO.NoteType.Note)
             {
-                NoteEntity newNote = (NoteEntity)e.NewValue;
                 TabItem newTab = new TabItem();
                 newTab.Name = newNote.Name;
                 OpenNotes.Add(newNote);

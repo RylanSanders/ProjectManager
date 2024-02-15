@@ -137,6 +137,7 @@ namespace ProjectManager.Pages
                 if (child == note)
                 {
                     Notes.Remove(child);
+                    DataUtil.GetInstance().Notes.Remove(child.DataObject);
                 }
                 else
                 {
@@ -162,5 +163,15 @@ namespace ProjectManager.Pages
             }
         }
 
+        private void DeleteNoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmContract confirmContract = new ConfirmContract("Are you sure you want to delete this Note?");
+            confirmContract.ShowDialog();
+            if (confirmContract.DialogResult==true)
+            {
+                RemoveParent((NoteEntity)((FrameworkElement)sender).DataContext
+                    );
+            }
+        }
     }
 }

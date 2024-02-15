@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ProjectManager.Pages"
+      xmlns:converters="clr-namespace:ProjectManager.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ToDoPage">
@@ -12,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/ResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <converters:TreeViewItemWidthConverter x:Key="TreeViewItemWidthConverter"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
@@ -25,10 +27,10 @@
                 <RowDefinition/>
                 <RowDefinition Height="45"/>
             </Grid.RowDefinitions>
-            <TreeView x:Name="NoteSelectionTreeView" BorderBrush="LightGray" BorderThickness="2" SelectedItemChanged="NoteSelectionTreeView_SelectedItemChanged">
+            <TreeView x:Name="NoteSelectionTreeView" BorderBrush="LightGray" BorderThickness="2" SelectedItemChanged="NoteSelectionTreeView_SelectedItemChanged" AllowDrop="True" MouseDown="TreeView_MouseDown" MouseUp="TreeView_MouseUp">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding ChildrenNotes}">
-                        <Grid >
+                        <Grid IsHitTestVisible="True" MouseDown="TreeViewItem_MouseDown" MouseUp="TreeViewItem_MouseUp" Width="{Binding ElementName=NoteSelectionTreeView, Path=ActualHeight, Converter={StaticResource TreeViewItemWidthConverter}}">
                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch"  />
                         </Grid>
                     </HierarchicalDataTemplate>
@@ -44,9 +46,11 @@
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <TextBox Text="{Binding Description}" Foreground="{DynamicResource MaterialDesignDarkForeground}"></TextBox>
-                    </Grid>
+                    <Border BorderBrush="Gray" BorderThickness="2">
+                        <Grid>
+                            <TextBox Text="{Binding Description}" Foreground="{DynamicResource MaterialDesignDarkForeground}"></TextBox>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>

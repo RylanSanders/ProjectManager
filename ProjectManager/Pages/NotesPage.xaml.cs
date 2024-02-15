@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -56,7 +57,11 @@ namespace ProjectManager.Pages
         private void NoteSelectionTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             NoteEntity newNote = (NoteEntity)e.NewValue;
-            if (e.NewValue != null && newNote.Type==NoteDO.NoteType.Note)
+            if (newNote != null && OpenNotes.Contains(newNote))
+            {
+                NoteTabPanel.SelectedItem = newNote;
+            }
+            else if (e.NewValue != null && newNote.Type==NoteDO.NoteType.Note)
             {
                 TabItem newTab = new TabItem();
                 newTab.Name = newNote.Name;

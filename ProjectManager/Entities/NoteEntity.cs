@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
+using System.Windows.Controls;
 
 namespace ProjectManager.Entities
 {
@@ -19,8 +20,6 @@ namespace ProjectManager.Entities
 
         public string Description { get { return DataObject.Description; } set { DataObject.Description = value; } }
 
-        private bool _isSelected = false;
-        public bool IsSelected { get { return _isSelected; }set { _isSelected = value; } }
         public NoteEntity(NoteDO note) 
         {
             DataObject = note;

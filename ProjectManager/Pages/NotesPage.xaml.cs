@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xaml.Behaviors;
-using ProjectManager.Behaviors;
 using ProjectManager.Contracts;
 using ProjectManager.DataObjects;
 using ProjectManager.Entities;
@@ -194,14 +193,14 @@ namespace ProjectManager.Pages
         {
             NoteEntity newTextBox = (NoteEntity)NoteTabPanel.SelectedContent;
             newTextBox.Description = ((TextBox)e.Source).Text;
+
         }
 
         private void NoteTabPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //NoteSelectionTreeView.SelectedItem_ = NoteTabPanel.SelectedContent;
-            ((NoteEntity)NoteTabPanel.SelectedContent).IsSelected = true;
-            //TODO would like to do it this way one day
-            //Interaction.GetBehaviors(NoteSelectionTreeView).OfType<BindableSelectedItemBehavior>().First().SelectedItem= firstNote;
+            NoteSelectionTreeView.FindTreeViewItems().ForEach(item=>item.IsSelected=false);
+            NoteSelectionTreeView.FindTreeViewItems().Where(item=>item.DataContext==NoteTabPanel.SelectedContent).First().IsSelected=true;
         }
+
     }
 }

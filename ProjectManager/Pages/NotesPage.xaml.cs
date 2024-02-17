@@ -178,5 +178,19 @@ namespace ProjectManager.Pages
                     );
             }
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            NoteEntity newTextBox = (NoteEntity)NoteTabPanel.SelectedContent;
+            newTextBox.Description = ((TextBox)e.Source).Text;
+        }
+
+        private void NoteTabPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            NoteSelectionTreeView.SelectedItem_ = NoteTabPanel.SelectedContent;
+            ((NoteEntity)NoteTabPanel.SelectedContent).IsSelected = true;
+            //TODO would like to do it this way one day
+            //Interaction.GetBehaviors(NoteSelectionTreeView).OfType<BindableSelectedItemBehavior>().First().SelectedItem= firstNote;
+        }
     }
 }

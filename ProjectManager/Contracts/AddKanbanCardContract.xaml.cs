@@ -31,6 +31,7 @@ namespace ProjectManager.Contracts
             InitializeComponent();
             WindowUtil.ApplyDarkWindowStyle(this);
             ParentProjectComboBox.ItemsSource = Projects;
+            ParentProjectComboBox.SelectedIndex = 0;
         }
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)

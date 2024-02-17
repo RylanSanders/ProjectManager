@@ -119,13 +119,26 @@ namespace ProjectManager.Pages
             }
             if (DraggedNote != null)
             {
-               RemoveParent(DraggedNote);
-                note.ChildrenNotes.Add(DraggedNote);
-                note.DataObject.ChildrenNotes.Add(DraggedNote.DataObject);
-                DraggedNote = null;
-
+                if (!ContainsChild(DraggedNote, note))
+                {
+                    RemoveParent(DraggedNote);
+                    note.ChildrenNotes.Add(DraggedNote);
+                    note.DataObject.ChildrenNotes.Add(DraggedNote.DataObject);
+                    DraggedNote = null;
+                }
+                else
+                {
+                    ConfirmContract confirm = new ConfirmContract("Cannot add a Parent Note to one of its children", ConfirmContract.ConfirmCategories.Cancel);
+                    confirm.ShowDialog();
+                }
             }
             Mouse.OverrideCursor = null;
+        }
+
+        private bool ContainsChild(NoteEntity parentNote, NoteEntity searchingNote)
+        {
+            if(parentNote == searchingNote) return true;
+            return parentNote.ChildrenNotes.Any(c => ContainsChild(c, searchingNote));
         }
 
         public void TreeView_MouseUp(object sender, MouseButtonEventArgs e)
@@ -173,8 +186,7 @@ namespace ProjectManager.Pages
             confirmContract.ShowDialog();
             if (confirmContract.DialogResult==true)
             {
-                RemoveParent((NoteEntity)((FrameworkElement)sender).DataContext
-                    );
+                RemoveParent((NoteEntity)((FrameworkElement)sender).DataContext);
             }
         }
 
@@ -186,7 +198,7 @@ namespace ProjectManager.Pages
 
         private void NoteTabPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            NoteSelectionTreeView.SelectedItem_ = NoteTabPanel.SelectedContent;
+            //NoteSelectionTreeView.SelectedItem_ = NoteTabPanel.SelectedContent;
             ((NoteEntity)NoteTabPanel.SelectedContent).IsSelected = true;
             //TODO would like to do it this way one day
             //Interaction.GetBehaviors(NoteSelectionTreeView).OfType<BindableSelectedItemBehavior>().First().SelectedItem= firstNote;

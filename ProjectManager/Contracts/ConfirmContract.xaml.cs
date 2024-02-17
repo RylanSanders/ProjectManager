@@ -20,10 +20,27 @@ namespace ProjectManager.Contracts
     /// </summary>
     public partial class ConfirmContract : Window
     {
-        public ConfirmContract(string ConfirmTexts)
+
+        public enum ConfirmCategories
+        {
+            ConfirmCancel, OK,Cancel
+        }
+        public ConfirmContract(string ConfirmTexts, ConfirmCategories type=ConfirmCategories.ConfirmCancel)
         {
             InitializeComponent();
             ConfirmTextBlock.Text = ConfirmTexts;
+            if (type == ConfirmCategories.OK)
+            {
+                CancelButton.Visibility = Visibility.Collapsed;
+                Grid.SetColumnSpan(OKButton, 2);
+            }
+            else if (type == ConfirmCategories.Cancel)
+            {
+                OKButton.Visibility = Visibility.Collapsed;
+                Grid.SetColumn(CancelButton, 0);
+                Grid.SetColumnSpan(CancelButton, 2);
+                CancelButton.Content = "OK";
+            }
             WindowUtil.ApplyDarkWindowStyle(this);
         }
 

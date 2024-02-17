@@ -143,6 +143,11 @@ namespace ProjectManager.Pages
         public void TreeView_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Mouse.OverrideCursor = null;
+            var hitTreeViewItem = NoteSelectionTreeView.FindTreeViewItems().Any(t => t.InputHitTest(e.GetPosition(t)) != null);
+            if(!hitTreeViewItem)
+            {
+                NoteSelectionTreeView.FindTreeViewItems().ForEach(item => item.IsSelected = false);
+            }
         }
 
         public void RemoveParent(NoteEntity note) {

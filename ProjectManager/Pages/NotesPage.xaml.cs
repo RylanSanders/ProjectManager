@@ -1,4 +1,6 @@
-﻿using ProjectManager.Contracts;
+﻿using Microsoft.Xaml.Behaviors;
+using ProjectManager.Behaviors;
+using ProjectManager.Contracts;
 using ProjectManager.DataObjects;
 using ProjectManager.Entities;
 using ProjectManager.Utils;
@@ -66,6 +68,7 @@ namespace ProjectManager.Pages
                 TabItem newTab = new TabItem();
                 newTab.Name = newNote.Name;
                 OpenNotes.Add(newNote);
+                NoteTabPanel.SelectedItem = newNote;
             }
         }
 
@@ -97,10 +100,6 @@ namespace ProjectManager.Pages
             if (e.ChangedButton == MouseButton.Left)
             {
                 _lastMouseDown = e.GetPosition(NoteSelectionTreeView);
-                if (NoteSelectionTreeView.SelectedItem != null)
-                {
-                    
-                }
             }
         }
 

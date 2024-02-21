@@ -12,6 +12,8 @@ namespace ProjectManager.Entities
     public class TaskItemEntity
     {
         public TaskItemDO TaskItem { get; set; }
+
+        public Guid ID { get { return TaskItem.ID; } }
         public string? Name { get { return TaskItem.Name; } set { TaskItem.Name = value; } }
         public string? Description { get { return TaskItem.Description; } set { TaskItem.Description = value; } }
         public Guid ParentProjectID { get { return TaskItem.ParentProjectID; } set { TaskItem.ParentProjectID = value; } }
@@ -31,7 +33,7 @@ namespace ProjectManager.Entities
             }
         }
 
-        private ListView listView;
+        private DataGrid listView;
 
         public void AddSession(SessionDO session)
         {
@@ -46,7 +48,7 @@ namespace ProjectManager.Entities
             collectionView.Refresh();
         }
 
-        public TaskItemEntity(ListView listViewControl, TaskItemDO dataObject)
+        public TaskItemEntity(DataGrid listViewControl, TaskItemDO dataObject)
         {
             TaskItem = dataObject;
             listView = listViewControl;

@@ -27,9 +27,6 @@
             <RowDefinition/>
             <RowDefinition Height="75"/>
         </Grid.RowDefinitions>
-        <!--<TextBlock>
-            <Hyperlink NavigateUri="CalendarPage.xaml">Hello</Hyperlink>
-        </TextBlock>-->
         <Grid x:Name="TimerPanel" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="DarkSlateBlue">
             <Controls:TimerCircle x:Name="MainTimerCircle" />
         </Grid>
@@ -42,24 +39,22 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource MaterialDesignDarkBackground}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}" />
-                            <TextBlock Text="{Binding Description}" Grid.Column="1" Margin="20,0,0,0" />
-                            <TextBlock Text="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Grid.Column="2" Margin="20,0,0,0" />
-                            <TextBlock Text="{Binding Duration}" Grid.Column="3" Margin="20,0,0,0"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <DataGrid x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource MaterialDesignDarkBackground}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                    <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                    <DataGridTextColumn Binding="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Header="Parent Project"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="ArchiveButton"  Grid.Column="4" Style="{StaticResource YellowPurpleHoverButton}"  Height="30" Width="30" Margin="-7" Click="ArchiveButton_Click">
+                                    <materialDesign:PackIcon Kind="Archive" Width="20" Height="20" Margin="-10, -11"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
             <Button x:Name="AddTaskButton" Grid.Row="1" Click="AddTaskButton_Click" Style="{StaticResource GreenPurpleHoverButton}" Height="40">
                 <materialDesign:PackIcon Width="24" Height="24" Kind="Add" />
             </Button>

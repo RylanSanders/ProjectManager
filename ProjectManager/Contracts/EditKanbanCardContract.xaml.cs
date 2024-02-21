@@ -43,10 +43,16 @@ namespace ProjectManager.Contracts
             DescriptionTextbox.AppendText(kanbanCard.Description);
 
             TasksListView.ItemsSource = TaskItems;
+            
             DataUtil.GetInstance().TaskItems
                 .Where(t=>t.AssociatedKanbanCardID==kanbanCard.ID)
                 .ToList()
                 .ForEach(item => TaskItems.Add(new TaskItemEntity(TasksListView, item)));
+            DataUtil.GetInstance().ArchivedData.Tasks
+                .Where(t => t.AssociatedKanbanCardID == kanbanCard.ID)
+                .ToList()
+                .ForEach(item => TaskItems.Add(new TaskItemEntity(TasksListView, item)));
+
         }
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)

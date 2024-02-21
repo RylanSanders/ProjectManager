@@ -137,6 +137,15 @@ namespace ProjectManager
             TaskItems.Remove(ActiveTask);
         }
 
-
+        private void ArchiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            TaskItemEntity task = ((Button)sender).DataContext as TaskItemEntity;
+            if (task != null) {
+                TaskItems.Remove(task);
+                DataUtil.GetInstance().TaskItems.Remove(task.TaskItem);
+                DataUtil.GetInstance().ArchivedData.Tasks.Add(task.TaskItem);
+            }
+            
+        }
     }
 }

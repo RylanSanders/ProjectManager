@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectManager.Contracts"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:converters="clr-namespace:ProjectManager.Converters"
         mc:Ignorable="d"
         Title="KanbanCardEditContract" Height="400" Width="500">
@@ -16,6 +17,7 @@
                 <Setter Property="Background" Value="{DynamicResource MaterialDesignDarkBackground}"/>
             </Style>
             <converters:ProjectNameConverter x:Key="ProjectNameConverter"/>
+            <converters:IsTaskItemArchivedConverter x:Key="IsTaskItemArchivedConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -38,24 +40,14 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <RichTextBox x:Name="DescriptionTextbox" BorderBrush="DarkGray" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
-            <ListView x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Column="1" Background="{DynamicResource MaterialDesignDarkBackground}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}" />
-                            <TextBlock Text="{Binding Description}" Grid.Column="1" Margin="20,0,0,0" />
-                            <TextBlock Text="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Grid.Column="2" Margin="20,0,0,0" />
-                            <TextBlock Text="{Binding Duration}" Grid.Column="3" Margin="20,0,0,0"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <DataGrid x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Column="1" Background="{DynamicResource MaterialDesignDarkBackground}" AutoGenerateColumns="False" BorderBrush="Gray" BorderThickness="2" CanUserResizeColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Description}" Header="Description" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Header="Parent Project" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn Binding="{Binding ID,Converter={StaticResource IsTaskItemArchivedConverter}, Mode=OneWay}" Header="Is Archived" IsReadOnly="True" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
         <Button x:Name="DoneButton" Content="Done" Height="60" Grid.Row="2" Style="{StaticResource GreenPurpleHoverButton}" Click="DoneButton_Click"/>
     </Grid>

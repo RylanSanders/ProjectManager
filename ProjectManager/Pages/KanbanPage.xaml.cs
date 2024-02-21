@@ -155,5 +155,16 @@ namespace ProjectManager.Pages
             DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 2).ToList().ForEach(c => Column3Cards.Add(c));
             DataUtil.GetInstance().KanbanCards.Where(c => c.ColumnNumber == 3).ToList().ForEach(c => Column4Cards.Add(c));
         }
+
+        private void ArchiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            KanbanCardDO card = ((Button)sender).DataContext as KanbanCardDO;
+            if (card != null)
+            {
+                ColumnCollections[card.ColumnNumber].Remove(card);
+                DataUtil.GetInstance().KanbanCards.Remove(card);
+                DataUtil.GetInstance().ArchivedData.KanbanCards.Add(card);
+            }
+        }
     }
 }

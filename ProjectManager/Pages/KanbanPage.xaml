@@ -6,12 +6,14 @@
       xmlns:local="clr-namespace:ProjectManager.Pages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:controls="clr-namespace:ProjectManager.Controls"
+      xmlns:converter="clr-namespace:ProjectManager.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="KanbanPage">
 
     <Page.Resources>
         <ResourceDictionary>
+            <converter:CardArchiveButtonConverter x:Key="CardArchiveButtonConverter"/>
             <Style TargetType="{x:Type TextBlock}">
                 <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDarkForeground}"/>
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -36,12 +38,22 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition>
+                                        <ColumnDefinition.Width>
+                                            <Binding Converter="{StaticResource CardArchiveButtonConverter}" />
+                                        </ColumnDefinition.Width>
+                                    </ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <controls:KanbanCard DataModel="{Binding}" MouseLeftButtonDown="ColumnListViewItem_PreviewMouseLeftButtonDown" IsHitTestVisible="True"/>
                                 <Border BorderThickness="2" BorderBrush="Gray" Grid.Column="1">
                                     <Button x:Name="DeleteButton"  RenderOptions.EdgeMode="Aliased" Padding="0,0,0,0" Style="{StaticResource RedHoverButton}" Click="DeleteButton_Click" >
                                         <materialDesign:PackIcon Width="24" Height="24" Kind="Close" />
                                     </Button>
+                                </Border>
+                                <Border BorderThickness="2" BorderBrush="Gray" Grid.Column="2">
+                                <Button x:Name="ArchiveButton"  RenderOptions.EdgeMode="Aliased" Padding="0,0,0,0" Style="{StaticResource YellowPurpleHoverButton}" Click="ArchiveButton_Click" >
+                                    <materialDesign:PackIcon Width="24" Height="24" Kind="Archive" />
+                                </Button>
                                 </Border>
                             </Grid>
                         </DataTemplate>

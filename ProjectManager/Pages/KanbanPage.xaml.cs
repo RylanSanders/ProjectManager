@@ -116,8 +116,13 @@ namespace ProjectManager.Pages
                 var card = senderButton.DataContext as KanbanCardDO;
                 if (card != null)
                 {
-                    ColumnCollections[card.ColumnNumber].Remove(card);
-                    DataUtil.GetInstance().KanbanCards.Remove(card);
+                    ConfirmContract confirm = new ConfirmContract($"Are you sure you want to delete {card.Name}?", ConfirmContract.ConfirmCategories.ConfirmCancel);
+                    confirm.ShowDialog();
+                    if (confirm.DialogResult==true)
+                    {
+                        ColumnCollections[card.ColumnNumber].Remove(card);
+                        DataUtil.GetInstance().KanbanCards.Remove(card);
+                    }
                 }
             }
         }

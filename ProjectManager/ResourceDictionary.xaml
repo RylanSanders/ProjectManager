@@ -122,7 +122,7 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
-             From="{StaticResource RedColor}" To="{StaticResource MaterialDesignDarkButtonBackgroundColor}" Duration="0:0:0.1"/>
+             From="{StaticResource YellowColor}" To="{StaticResource MaterialDesignDarkButtonBackgroundColor}" Duration="0:0:0.1"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>

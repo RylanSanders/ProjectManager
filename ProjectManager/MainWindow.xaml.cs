@@ -31,9 +31,10 @@ namespace ProjectManager
             Pages.Add("Pages/KanbanPage.xaml", new KanbanPage());
             Pages.Add("Pages/NotesPage.xaml", new NotesPage()) ;
 
-            ContentFrame.Content = Pages["Pages/NotesPage.xaml"];
+            ContentFrame.Content = Pages["Pages/KanbanPage.xaml"];
 
             WindowUtil.ApplyDarkWindowStyle(this);
+            PageUtil.Init(Pages);
         }
 
         public static RoutedCommand SwitchPageCommand = new RoutedCommand();

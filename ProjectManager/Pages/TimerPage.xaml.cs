@@ -147,5 +147,18 @@ namespace ProjectManager
             }
             
         }
+
+        public void SwitchActiveTask(TaskItemEntity newTaskItem)
+        {
+            if (_timerIntervals.Count != 0)
+            {
+                StopButton_Click(null, null);
+            }
+            PlayButton.IsEnabled = true;
+            PauseButton.IsEnabled = true;
+            StopButton.IsEnabled = true;
+            ActiveTask = newTaskItem;
+            PlayButton_Click(null, null);
+        }
     }
 }

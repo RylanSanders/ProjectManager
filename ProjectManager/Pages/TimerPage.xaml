@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/ResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <converters:ProjectNameConverter x:Key="ProjectNameConverter"/>
+            <converters:TimeSpanConverter x:Key="TimeSpanConverter"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="Aqua">
@@ -42,8 +43,8 @@
             <DataGrid x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource MaterialDesignDarkBackground}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Description}" Header="Description" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Header="Parent Project" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Duration, Converter={StaticResource TimeSpanConverter}, Mode=OneWay}" Header="Duration" IsReadOnly="True"/>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

@@ -60,7 +60,7 @@
                 <DataTemplate>
                     <Border BorderBrush="Gray" BorderThickness="2">
                         <Grid>
-                            <TextBox Text="{Binding Description}" TextChanged="TextBox_TextChanged" Tag="{Binding}" Grid.Column="1" Foreground="{DynamicResource MaterialDesignDarkForeground}"></TextBox>
+                            <controls:TODONote/>
                         </Grid>
                     </Border>
                 </DataTemplate>

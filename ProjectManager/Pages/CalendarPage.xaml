@@ -83,7 +83,7 @@
                 </ListView.ItemTemplate>
                 
             </ListView>
-            <DataGrid Grid.Row="1" x:Name="DailyTaskDataGrid" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="1" x:Name="DailyTaskDataGrid" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}"/>
                     <DataGridTextColumn Binding="{Binding Name}"/>

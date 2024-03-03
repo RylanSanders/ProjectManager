@@ -14,6 +14,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Calendar.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:NumTasksPerDayConverter x:Key="NumTasksPerDayConverter" />
+            <converters:TimeSpanConverter x:Key="TimeSpanConverter"/>
+            <converters:ProjectNameConverter x:Key="ProjectNameConverter"/>
             <SolidColorBrush x:Key="TaskForegroundColor">#9965f7</SolidColorBrush>
             <SolidColorBrush x:Key="TodayForegroundColor">#474747</SolidColorBrush>
             <Style x:Key="CalendarDayButtonStyle" TargetType="{x:Type CalendarDayButton}" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
@@ -65,6 +67,7 @@
         <Grid Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
+                <RowDefinition/>
                 <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
             <ListView x:Name="DateListView">
@@ -78,8 +81,16 @@
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                
             </ListView>
-            <Button x:Name="AddDateButton" Grid.Row="1" Content="Add" Click="AddDateButton_Click">
+            <DataGrid Grid.Row="1" x:Name="DailyTaskDataGrid" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}"/>
+                    <DataGridTextColumn Binding="{Binding Name}"/>
+                    <DataGridTextColumn Binding="{Binding Duration, Converter={StaticResource TimeSpanConverter}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="AddDateButton" Grid.Row="2" Content="Add" Click="AddDateButton_Click">
                 
             </Button>
         </Grid>

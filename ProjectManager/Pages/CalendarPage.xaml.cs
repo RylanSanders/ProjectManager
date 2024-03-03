@@ -1,5 +1,6 @@
 ﻿using ProjectManager.Contracts;
 using ProjectManager.DataObjects;
+using ProjectManager.Entities;
 using ProjectManager.Utils;
 using System;
 using System.Collections.Generic;
@@ -26,15 +27,18 @@ namespace ProjectManager
     public partial class CalendarPage : Page
     {
         public ObservableCollection<DateEntity> CurrentDateDOs = new ObservableCollection<DateEntity>();
+        public ObservableCollection<DailyTaskEntity> CurrentDateTasks = new ObservableCollection<DailyTaskEntity>();
         public CalendarPage()
         {
             InitializeComponent();
 
             DateListView.ItemsSource = CurrentDateDOs;
-
+            DailyTaskDataGrid.ItemsSource = CurrentDateTasks;
             MainCalendar.SelectedDate = DateTime.Today;
             DataUtil.Load();
             DataUtil.GetInstance().Dates.Where(d => d.Interval.StartTime.Date == MainCalendar.SelectedDate).ToList().ForEach(dateDO => CurrentDateDOs.Add(new DateEntity(dateDO)));
+
+            RefreshDailyTasks();
         }
 
         public class DateEntity
@@ -64,10 +68,18 @@ namespace ProjectManager
             }
         }
 
+        private void RefreshDailyTasks()
+        {
+            CurrentDateTasks.Clear();
+            DataUtil.GetInstance().TaskItems.Select(ti => new DailyTaskEntity(ti, MainCalendar.SelectedDate.Value)).Where(dt => dt.Duration.TotalSeconds > 0).ToList().ForEach(dt => CurrentDateTasks.Add(dt));
+            DataUtil.GetInstance().ArchivedData.Tasks.Select(ti => new DailyTaskEntity(ti, MainCalendar.SelectedDate.Value)).Where(dt => dt.Duration.TotalSeconds > 0).ToList().ForEach(dt => CurrentDateTasks.Add(dt));
+        }
+
         private void MainCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             CurrentDateDOs.Clear();
             DataUtil.GetInstance().Dates.Where(d=>d.Interval.StartTime.Date == MainCalendar.SelectedDate).ToList().ForEach(dateDO => CurrentDateDOs.Add(new DateEntity(dateDO)));
+            RefreshDailyTasks();
         }
     }
 }

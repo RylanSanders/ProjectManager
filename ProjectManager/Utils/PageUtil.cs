@@ -11,15 +11,22 @@ namespace ProjectManager.Utils
     {
         private static PageUtil instance;
         public Dictionary<string, Page> Pages;
-        public static void Init(Dictionary<string, Page> pages)
+        public MainWindow MainWindow;
+        public static void Init(Dictionary<string, Page> pages, MainWindow mainWindow)
         {
             instance = new PageUtil();
             instance.Pages = pages;
+            instance.MainWindow = mainWindow;
         }
 
         public static Dictionary<string, Page> GetPages()
         {
             return instance.Pages;
+        }
+
+        public static MainWindow GetMainWindow()
+        {
+            return instance.MainWindow;
         }
     }
 }

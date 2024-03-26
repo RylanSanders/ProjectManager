@@ -22,6 +22,10 @@ namespace ProjectManager
     public partial class MainWindow : Window
     {
         private Dictionary<string, Page> Pages = new Dictionary<string, Page>();
+
+        private BitmapImage DefaultIcon;
+        private BitmapImage TimerIcon;
+        private BitmapImage PauseIcon;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,10 +35,16 @@ namespace ProjectManager
             Pages.Add("Pages/KanbanPage.xaml", new KanbanPage());
             Pages.Add("Pages/NotesPage.xaml", new NotesPage()) ;
 
-            ContentFrame.Content = Pages["Pages/KanbanPage.xaml"];
 
+            ContentFrame.Content = Pages["Pages/KanbanPage.xaml"];
             WindowUtil.ApplyDarkWindowStyle(this);
-            PageUtil.Init(Pages);
+            PageUtil.Init(Pages, this);
+
+            var resourceDict = new ResourceDictionary();
+            resourceDict.Source = new Uri(@"pack://application:,,,/ResourceDictionary.xaml", UriKind.RelativeOrAbsolute);
+            DefaultIcon = (BitmapImage)resourceDict["DefaultAppIcon"];
+            TimerIcon = (BitmapImage)resourceDict["TimerAppIcon"];
+            PauseIcon = (BitmapImage)resourceDict["PauseAppIcon"];
         }
 
         public static RoutedCommand SwitchPageCommand = new RoutedCommand();
@@ -46,11 +56,32 @@ namespace ProjectManager
             ContentFrame.Content = Pages[pageID];
         }
 
+        public void ChangeIcon(AppIcons icon)
+        {
+            if (icon == AppIcons.Default)
+            {
+                Icon = DefaultIcon;
+            }
+            else if (icon == AppIcons.TimerPlay)
+            {
+                Icon = TimerIcon;
+            }
+            else if (icon == AppIcons.Pause)
+            {
+                Icon = PauseIcon;
+            }
+        }
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
 
             DataUtil.Save();
+        }
+
+        public enum AppIcons
+        {
+            Default, TimerPlay, Pause
         }
     }
 }

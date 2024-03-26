@@ -7,6 +7,10 @@
     <SolidColorBrush x:Key="SelectedForegroundColor">#673AB7</SolidColorBrush>
     <SolidColorBrush x:Key="UnselectedBackgroundColor">#212121</SolidColorBrush>
     <SolidColorBrush x:Key="UnselectedForegroundColor">White</SolidColorBrush>
+    <BitmapImage x:Key="DefaultAppIcon" UriSource="/Icons/pmlogo_bMw_12.ico" />
+    <BitmapImage x:Key="TimerAppIcon" UriSource="/Icons/pmlogo_timer_nPr_2.ico" />
+    <BitmapImage x:Key="PauseAppIcon" UriSource="/Icons/pmlogo_pause_OzY_icon.ico" />
+
 
     <Color x:Key="GreenColor">#2fb553</Color>
     <Color x:Key="RedColor">#e81e36</Color>

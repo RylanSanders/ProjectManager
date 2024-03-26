@@ -86,6 +86,7 @@ namespace ProjectManager
             _timerIntervals.Add(new IntervalDO() { StartTime = DateTime.Now });
             _timer.Enabled = true;
             _timer.Start();
+            PageUtil.GetMainWindow().ChangeIcon(MainWindow.AppIcons.TimerPlay);
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
@@ -94,6 +95,7 @@ namespace ProjectManager
             {
                 _timerIntervals.Last().EndTime = DateTime.Now;
                 _timer.Stop();
+                PageUtil.GetMainWindow().ChangeIcon(MainWindow.AppIcons.Pause);
             }
         }
 
@@ -110,8 +112,8 @@ namespace ProjectManager
             completedSession.Intervals.AddRange(_timerIntervals);
             ActiveTask.AddSession(completedSession);
             _timerIntervals.Clear();
-
             SetDailyTime();
+            PageUtil.GetMainWindow().ChangeIcon(MainWindow.AppIcons.Default);
         }
 
         private void TasksListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -33,11 +33,26 @@ namespace ProjectManager.Controls
             }
         }
 
+        private TimeSpan _currentDailyTime = TimeSpan.Zero;
+        public TimeSpan CurrentDailyTime
+        {
+            get
+            {
+                return _currentDailyTime;
+            }
+            set
+            {
+                _currentDailyTime = value;
+                DailyTimeTextBox.Text = CurrentDailyTime.ToString(@"dd\.hh\:mm\:ss\.ff");
+            }
+        }
+
         public TimerCircle()
         {
             InitializeComponent();
 
             DurationTextBox.Text = CurrentTime.ToString();
+            DailyTimeTextBox.Text = CurrentDailyTime.ToString(@"dd\.hh\:mm\:ss\.ff");
         }
     }
 }

@@ -56,6 +56,7 @@ namespace ProjectManager
 
             DataUtil.Load();
             DataUtil.GetInstance().TaskItems.ForEach(item => TaskItems.Add(new TaskItemEntity(TasksListView, item)));
+            SetDailyTime();
         }
 
         
@@ -70,7 +71,11 @@ namespace ProjectManager
                     _timerIntervals.Last().EndTime = DateTime.Now;
                     TimeSpan sumIntervals = TimeSpan.Zero;
                     _timerIntervals.ForEach(interval => sumIntervals += interval.EndTime.TimeOfDay - interval.StartTime.TimeOfDay);
-                    MainTimerCircle.Dispatcher.Invoke(() => MainTimerCircle.CurrentTime = sumIntervals);
+
+                    ;
+                    MainTimerCircle.Dispatcher.Invoke(() => {
+                        MainTimerCircle.CurrentTime = sumIntervals;
+                    });
                 } catch { }};
             _timer.AutoReset = true;
             _timer.Enabled = false;
@@ -106,6 +111,7 @@ namespace ProjectManager
             ActiveTask.AddSession(completedSession);
             _timerIntervals.Clear();
 
+            SetDailyTime();
         }
 
         private void TasksListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -146,6 +152,19 @@ namespace ProjectManager
                 DataUtil.GetInstance().ArchivedData.Tasks.Add(task.TaskItem);
             }
             
+        }
+
+        private void SetDailyTime()
+        {
+            TimeSpan sumDailyTasks = TimeSpan.Zero;
+            DataUtil.GetInstance().TaskItems.ForEach((task) =>
+            {
+                task.Sessions.ForEach(s =>
+                {
+                    s.Intervals.Where(i => i.StartTime.Date == DateTime.Today).ToList().ForEach(i => sumDailyTasks += i.EndTime - i.StartTime);
+                });
+            });
+            MainTimerCircle.CurrentDailyTime = sumDailyTasks;
         }
 
         public void SwitchActiveTask(TaskItemEntity newTaskItem)

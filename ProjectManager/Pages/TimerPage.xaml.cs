@@ -178,8 +178,10 @@ namespace ProjectManager
             PlayButton.IsEnabled = true;
             PauseButton.IsEnabled = true;
             StopButton.IsEnabled = true;
+            
             ActiveTask = newTaskItem;
             PlayButton_Click(null, null);
+            TasksListView.SelectedItem = newTaskItem;
         }
     }
 }

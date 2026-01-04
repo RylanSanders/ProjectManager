@@ -183,5 +183,11 @@ namespace ProjectManager
             PlayButton_Click(null, null);
             TasksListView.SelectedItem = newTaskItem;
         }
+
+        private void TasksListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            EditTaskTimeContract taskTimerContract = new EditTaskTimeContract(ActiveTask);
+            taskTimerContract.ShowDialog();
+        }
     }
 }

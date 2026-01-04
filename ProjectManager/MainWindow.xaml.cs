@@ -36,7 +36,7 @@ namespace ProjectManager
             Pages.Add("Pages/NotesPage.xaml", new NotesPage()) ;
 
 
-            ContentFrame.Content = Pages["Pages/KanbanPage.xaml"];
+            ContentFrame.Content = Pages["Pages/TimerPage.xaml"];
             WindowUtil.ApplyDarkWindowStyle(this);
             PageUtil.Init(Pages, this);
 

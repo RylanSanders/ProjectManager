@@ -40,7 +40,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource MaterialDesignDarkBackground}" AutoGenerateColumns="False">
+            <DataGrid x:Name="TasksListView" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource MaterialDesignDarkBackground}" MouseDoubleClick="TasksListView_MouseDoubleClick" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding ParentProjectID, Converter={StaticResource ProjectNameConverter}}" Header="Parent Project" IsReadOnly="True"/>

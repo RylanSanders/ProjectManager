@@ -59,7 +59,7 @@ namespace ProjectManager.Controls
 
         private void processChanges(TextChangedEventArgs e)
         {
-            foreach (var change in e.Changes)
+         foreach (var change in e.Changes)
             {
                 if (change.AddedLength > 0 || change.RemovedLength > 0)
                 {

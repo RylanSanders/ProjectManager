@@ -35,6 +35,7 @@ namespace ProjectManager.Utils
         public List<KanbanCardDO> KanbanCards {get{return DataDO.KanbanCards;}} 
         public List<TagDefinitionDO> TagDefinitions {get{return DataDO.TagDefinitions;} }
         public List<NoteDO> Notes { get { return DataDO.Notes;} }
+        public List<TodoDO> Todos { get { return DataDO.ToDos; } }
 
         public DataDO ArchivedData { get; set; }
         public DataUtil() 

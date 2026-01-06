@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProjectManager.DataObjects
+{
+    public class TodoDO
+    {
+       public Guid ParentProjectID { get; set; }
+       public Guid ID { get; set; }
+
+        public DateTime EndDate { get; set; }
+        public bool IsCompleted { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public TodoDO()
+        {
+            ID = Guid.NewGuid();
+        }
+    }
+}

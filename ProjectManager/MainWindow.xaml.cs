@@ -34,7 +34,7 @@ namespace ProjectManager
             Pages.Add("Pages/TimerPage.xaml", new TimerPage());
             Pages.Add("Pages/KanbanPage.xaml", new KanbanPage());
             Pages.Add("Pages/NotesPage.xaml", new NotesPage()) ;
-
+            Pages.Add("Pages/TODOPage.xaml", new TODOPage());
 
             ContentFrame.Content = Pages["Pages/TimerPage.xaml"];
             WindowUtil.ApplyDarkWindowStyle(this);

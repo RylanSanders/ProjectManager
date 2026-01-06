@@ -153,7 +153,6 @@ namespace ProjectManager
                 DataUtil.GetInstance().TaskItems.Remove(task.TaskItem);
                 DataUtil.GetInstance().ArchivedData.Tasks.Add(task.TaskItem);
             }
-            
         }
 
         private void SetDailyTime()

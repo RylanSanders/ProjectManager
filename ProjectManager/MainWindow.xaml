@@ -21,14 +21,15 @@
     </Window.CommandBindings>
     <Grid>
         <Frame x:Name="ContentFrame" Source="Pages/TimerPage.xaml" NavigationUIVisibility="Hidden"></Frame>
-        <md:DrawerHost LeftDrawerBackground="{DynamicResource MaterialDesignPaper}">
+        <md:DrawerHost >
             <md:DrawerHost.LeftDrawerContent>
                 <!-- TODO switch this to a Material Design Navigation Rail-->
                 <StackPanel Width="150">
                     <Button Height="32" Content="Calendar" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/CalendarPage.xaml" />
                     <Button Height="32" Content="Timer" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/TimerPage.xaml" />
                     <Button Height="32" Content="Kanban" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/KanbanPage.xaml" />
-                    <Button Height="32" Content="ToDo" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/NotesPage.xaml" />
+                    <Button Height="32" Content="Notes" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/NotesPage.xaml" />
+                    <Button Height="32" Content="TODO" Command="{x:Static local:MainWindow.SwitchPageCommand}" Style="{StaticResource GreenPurpleHoverButton}" CommandParameter="Pages/TODOPage.xaml" />
                 </StackPanel>
             </md:DrawerHost.LeftDrawerContent>
             <md:DrawerHost.RightDrawerContent>

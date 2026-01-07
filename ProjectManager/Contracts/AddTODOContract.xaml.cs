@@ -27,6 +27,8 @@ namespace ProjectManager.Contracts
         public ObservableCollection<string> IntervalSelections = new ObservableCollection<string>(["Weekly", "Monthly", "Every 2 Months"]);
 
         public List<TodoDO> Result = new List<TodoDO>();
+
+        public ObservableCollection<SubTodoDO> subTodoDOs = new ObservableCollection<SubTodoDO>();
         public AddTODOContract()
         {
             InitializeComponent();
@@ -37,36 +39,76 @@ namespace ProjectManager.Contracts
             ParentProjectComboBox.SelectedIndex = 0;
 
             IntervalComboBox.ItemsSource = IntervalSelections;
+            SubTodoDataGrid.ItemsSource = subTodoDOs;
         }
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)
         {
-            //Result = new TodoDO() {ParentProjectID=((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, Name=NameTextBox.Text, Description=DescriptionTextBox.Text, ID=Guid.NewGuid(), IsCompleted=false};
             if (IntervalComboBox.SelectedValue == null)
             {
-                Result.Add(new TodoDO() { ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, Name = NameTextBox.Text, Description = DescriptionTextBox.Text, ID = Guid.NewGuid(), IsCompleted = false, EndDate= DueDatePicker.SelectedDate.Value });
+                Result.Add(new TodoDO() { 
+                    ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, 
+                    Name = NameTextBox.Text, 
+                    Description = DescriptionTextBox.Text, 
+                    ID = Guid.NewGuid(),
+                    IsCompleted = false, 
+                    EndDate= DueDatePicker.SelectedDate.Value });
+
             }else if (IntervalComboBox.SelectedValue.ToString()== "Weekly")
             {
                 foreach(DateTime saturday in GetSaturdays(StartDateTimePicker.SelectedDate.Value, EndDateTimePicker.SelectedDate.Value))
                 {
-                    Result.Add(new TodoDO() { ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, Name = NameTextBox.Text, Description = DescriptionTextBox.Text, ID = Guid.NewGuid(), IsCompleted = false, EndDate = saturday });
+                    Result.Add(new TodoDO() { 
+                        ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, 
+                        Name = NameTextBox.Text, 
+                        Description = DescriptionTextBox.Text, 
+                        ID = Guid.NewGuid(), 
+                        IsCompleted = false, 
+                        EndDate = saturday 
+                    });
                 }
             }
             else if (IntervalComboBox.SelectedValue.ToString() == "Monthly")
             {
                 foreach (DateTime day in GetEndOfMonths(StartDateTimePicker.SelectedDate.Value, EndDateTimePicker.SelectedDate.Value))
                 {
-                    Result.Add(new TodoDO() { ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, Name = NameTextBox.Text, Description = DescriptionTextBox.Text, ID = Guid.NewGuid(), IsCompleted = false, EndDate = day });
+                    Result.Add(new TodoDO() { 
+                        ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, 
+                        Name = NameTextBox.Text, 
+                        Description = DescriptionTextBox.Text, 
+                        ID = Guid.NewGuid(), 
+                        IsCompleted = false, 
+                        EndDate = day });
                 }
             }
             else if (IntervalComboBox.SelectedValue.ToString() == "Every 2 Months")
             {
                 foreach (DateTime day in GetLastDaysOfEveryOtherMonth(StartDateTimePicker.SelectedDate.Value, EndDateTimePicker.SelectedDate.Value))
                 {
-                    Result.Add(new TodoDO() { ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, Name = NameTextBox.Text, Description = DescriptionTextBox.Text, ID = Guid.NewGuid(), IsCompleted = false, EndDate = day });
+                    Result.Add(new TodoDO() { 
+                        ParentProjectID = ((ProjectDefinitionDO)ParentProjectComboBox.SelectedValue).ID, 
+                        Name = NameTextBox.Text, 
+                        Description = DescriptionTextBox.Text, 
+                        ID = Guid.NewGuid(), 
+                        IsCompleted = false, 
+                        EndDate = day });
                 }
             }
+            AssignSubTodos();
             DialogResult = true;
+        }
+
+        void AssignSubTodos()
+        {
+            foreach(TodoDO todo in Result)
+            {
+                foreach(SubTodoDO sub in subTodoDOs)
+                {
+                    SubTodoDO subTODO = sub.Clone();
+                    subTODO.ParentTodoID = todo.ID;
+                    todo.SubTodos.Add(subTODO);
+                }
+            }
         }
 
         IEnumerable<DateTime> GetSaturdays(DateTime start, DateTime end)
@@ -108,6 +150,15 @@ namespace ProjectManager.Contracts
                     yield return lastDay;
 
                 current = current.AddMonths(2);
+            }
+        }
+
+        private void DeleteSubTODOButton_Click(object sender, RoutedEventArgs e)
+        {
+            SubTodoDO sub = ((Button)sender).DataContext as SubTodoDO;
+            if(sub != null)
+            {
+                subTodoDOs.Remove(sub);
             }
         }
     }

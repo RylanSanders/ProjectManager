@@ -27,16 +27,16 @@ namespace ProjectManager.Pages
     public partial class TODOPage : Page
     {
         public ObservableCollection<string> IntervalSelections = new ObservableCollection<string>(["All", "This Week", "2 Weeks", "Month", "2 Months", "Year"]);
-        public ObservableCollection<TodoDO> TodoDataObjects { get; set; }
+        public ObservableCollection<TodoEntity> TodoDataObjects { get; set; }
         public TODOPage()
         {
             InitializeComponent();
-            TodoDataObjects = new ObservableCollection<TodoDO>();
+            TodoDataObjects = new ObservableCollection<TodoEntity>();
 
             IntervalListBox.ItemsSource = IntervalSelections;
-            TODODataGrid.ItemsSource = TodoDataObjects;
+            TodoTreeView.ItemsSource = TodoDataObjects;
 
-            DataUtil.GetInstance().Todos.ForEach(f => TodoDataObjects.Add(f));
+            DataUtil.GetInstance().Todos.Select(f=>new TodoEntity(f)).ToList().ForEach(f => TodoDataObjects.Add(f));
             
             TodoDataObjects.CollectionChanged += TodoDataObjects_CollectionChanged;
         }
@@ -48,7 +48,7 @@ namespace ProjectManager.Pages
 
         void SortByColumn(string propertyName, ListSortDirection direction)
         {
-            ICollectionView view = CollectionViewSource.GetDefaultView(TODODataGrid.ItemsSource);
+            ICollectionView view = CollectionViewSource.GetDefaultView(TodoTreeView.ItemsSource);
 
             if (view == null) return;
 
@@ -66,17 +66,32 @@ namespace ProjectManager.Pages
             if (contract.ShowDialog().GetValueOrDefault())
             {
                 contract.Result.ForEach(f => DataUtil.GetInstance().Todos.Add(f));
-                contract.Result.ForEach(f => TodoDataObjects.Add(f));
+                contract.Result.Select(f => new TodoEntity(f)).ToList().ForEach(f => TodoDataObjects.Add(f));
             }
         }
 
         private void DeleteTODOButton_Click(object sender, RoutedEventArgs e)
         {
-            TodoDO task = ((Button)sender).DataContext as TodoDO;
+            TodoEntity task = ((Button)sender).DataContext as TodoEntity;
             if (task != null)
             {
                 TodoDataObjects.Remove(task);
-                DataUtil.GetInstance().Todos.Remove(task);
+                DataUtil.GetInstance().Todos.Remove(task.Todo);
+            }
+
+            SubTodoDO sub = ((Button)sender).DataContext as SubTodoDO;
+            if(sub != null)
+            {
+                var localParentTODO = TodoDataObjects.FirstOrDefault(f => f.ID == sub.ParentTodoID);
+                if (localParentTODO != null)
+                {
+                    localParentTODO.SubTodos.Remove(sub);
+                }
+                var parentTODO = DataUtil.GetInstance().Todos.FirstOrDefault(f => f.ID == sub.ParentTodoID);
+                if (parentTODO != null)
+                {
+                    parentTODO.SubTodos.Remove(sub);
+                }
             }
         }
 
@@ -85,31 +100,31 @@ namespace ProjectManager.Pages
             if (e.AddedItems[0]?.ToString() == "All")
             {
                 TodoDataObjects.Clear();
-                DataUtil.GetInstance().Todos.ForEach(f => TodoDataObjects.Add(f));
+                DataUtil.GetInstance().Todos.Select(f => new TodoEntity(f)).ToList().ForEach(f => TodoDataObjects.Add(f));
             }else if(e.AddedItems[0]?.ToString() == "This Week")
             {
                 TodoDataObjects.Clear();
-                DataUtil.GetInstance().Todos.Where(f=>f.EndDate-DateTime.Today<TimeSpan.FromDays(7)).ToList().ForEach(f => TodoDataObjects.Add(f));
+                DataUtil.GetInstance().Todos.Select(f => new TodoEntity(f)).ToList().Where(f=>f.EndDate-DateTime.Today<TimeSpan.FromDays(7)).ToList().ForEach(f => TodoDataObjects.Add(f));
             }
             else if (e.AddedItems[0]?.ToString() == "2 Weeks")
             {
                 TodoDataObjects.Clear();
-                DataUtil.GetInstance().Todos.Where(f => f.EndDate - DateTime.Today < TimeSpan.FromDays(14)).ToList().ForEach(f => TodoDataObjects.Add(f));
+                DataUtil.GetInstance().Todos.Select(f => new TodoEntity(f)).ToList().Where(f => f.EndDate - DateTime.Today < TimeSpan.FromDays(14)).ToList().ForEach(f => TodoDataObjects.Add(f));
             }
             else if (e.AddedItems[0]?.ToString() == "Month")
             {
                 TodoDataObjects.Clear();
-                DataUtil.GetInstance().Todos.Where(f => f.EndDate - DateTime.Today < TimeSpan.FromDays(30)).ToList().ForEach(f => TodoDataObjects.Add(f));
+                DataUtil.GetInstance().Todos.Select(f => new TodoEntity(f)).ToList().Where(f => f.EndDate - DateTime.Today < TimeSpan.FromDays(30)).ToList().ForEach(f => TodoDataObjects.Add(f));
             }
             else if (e.AddedItems[0]?.ToString() == "2 Months")
             {
                 TodoDataObjects.Clear();
-                DataUtil.GetInstance().Todos.Where(f => f.EndDate - DateTime.Today < TimeSpan.FromDays(60)).ToList().ForEach(f => TodoDataObjects.Add(f));
+                DataUtil.GetInstance().Todos.Select(f => new TodoEntity(f)).ToList().Where(f => f.EndDate - DateTime.Today < TimeSpan.FromDays(60)).ToList().ForEach(f => TodoDataObjects.Add(f));
             }
             else if (e.AddedItems[0]?.ToString() == "Year")
             {
                 TodoDataObjects.Clear();
-                DataUtil.GetInstance().Todos.Where(f => f.EndDate - DateTime.Today < TimeSpan.FromDays(365)).ToList().ForEach(f => TodoDataObjects.Add(f));
+                DataUtil.GetInstance().Todos.Select(f => new TodoEntity(f)).ToList().Where(f => f.EndDate - DateTime.Today < TimeSpan.FromDays(365)).ToList().ForEach(f => TodoDataObjects.Add(f));
             }
         }
     }

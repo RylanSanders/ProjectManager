@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectManager.Contracts"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         Title="AddTODOContract" Height="0" Width="0" ResizeMode="NoResize"
@@ -15,8 +16,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Width="400">
+    <Grid Width="500">
         <Grid.RowDefinitions>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -55,6 +57,24 @@
                 <ComboBox x:Name="IntervalComboBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,15"/>
             </Grid>
         </Expander>
-        <Button x:Name="DoneButton" Grid.Row="5" Grid.ColumnSpan="2" Content="Done" Click="DoneButton_Click" Style="{StaticResource GreenPurpleHoverButton}" Height="40" Margin="0,0,0,0"/>
+        <Expander Grid.Row="5" Grid.ColumnSpan="2" Header="SubTodos" Foreground="{DynamicResource MaterialDesignDarkForeground}" VerticalAlignment="Stretch">
+            <DataGrid x:Name="SubTodoDataGrid" AutoGenerateColumns="False" CanUserAddRows="True">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsCompleted}" Header="IsCompleted"/>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                    <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="DeleteSubTODOButton"  Grid.Column="4" Style="{StaticResource RedPurpleHoverButton}"  Height="30" Width="30" Margin="-7" Click="DeleteSubTODOButton_Click">
+                                    <materialDesign:PackIcon Kind="Close" Width="20" Height="20" Margin="-10, -11"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Expander>
+        <Button x:Name="DoneButton" Grid.Row="6" Grid.ColumnSpan="2" Content="Done" Click="DoneButton_Click" Style="{StaticResource GreenPurpleHoverButton}" Height="40" Margin="0,0,0,0"/>
     </Grid>
 </Window>
